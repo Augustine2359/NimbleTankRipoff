@@ -1,0 +1,309 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		F967AB5F16A3E8BA00BBE44D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967AB5E16A3E8BA00BBE44D /* UIKit.framework */; };
+		F967AB6116A3E8BA00BBE44D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967AB6016A3E8BA00BBE44D /* Foundation.framework */; };
+		F967AB6316A3E8BA00BBE44D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967AB6216A3E8BA00BBE44D /* CoreGraphics.framework */; };
+		F967AB6916A3E8BA00BBE44D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = F967AB6716A3E8BA00BBE44D /* InfoPlist.strings */; };
+		F967AB6B16A3E8BA00BBE44D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F967AB6A16A3E8BA00BBE44D /* main.m */; };
+		F967AB6F16A3E8BA00BBE44D /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F967AB6E16A3E8BA00BBE44D /* AppDelegate.m */; };
+		F967AB7116A3E8BA00BBE44D /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = F967AB7016A3E8BA00BBE44D /* Default.png */; };
+		F967AB7316A3E8BA00BBE44D /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F967AB7216A3E8BA00BBE44D /* Default@2x.png */; };
+		F967AB7516A3E8BA00BBE44D /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = F967AB7416A3E8BA00BBE44D /* Default-568h@2x.png */; };
+		F967AB7D16A3E8FD00BBE44D /* NTRMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F967AB7C16A3E8FD00BBE44D /* NTRMainViewController.m */; };
+		F967AB8016A3E94800BBE44D /* NTRTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = F967AB7F16A3E94800BBE44D /* NTRTableView.m */; };
+		F967AB8316A3ECBE00BBE44D /* NTRTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F967AB8216A3ECBE00BBE44D /* NTRTableViewCell.m */; };
+		F967AB8A16A3EFCB00BBE44D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967AB8816A3EFB800BBE44D /* QuartzCore.framework */; };
+		F967AB8D16A3F9F700BBE44D /* NTRRoundedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F967AB8C16A3F9F700BBE44D /* NTRRoundedRectView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		F967AB5A16A3E8BA00BBE44D /* NimbleTankRipoff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NimbleTankRipoff.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F967AB5E16A3E8BA00BBE44D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		F967AB6016A3E8BA00BBE44D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		F967AB6216A3E8BA00BBE44D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		F967AB6616A3E8BA00BBE44D /* NimbleTankRipoff-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NimbleTankRipoff-Info.plist"; sourceTree = "<group>"; };
+		F967AB6816A3E8BA00BBE44D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		F967AB6A16A3E8BA00BBE44D /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		F967AB6C16A3E8BA00BBE44D /* NimbleTankRipoff-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NimbleTankRipoff-Prefix.pch"; sourceTree = "<group>"; };
+		F967AB6D16A3E8BA00BBE44D /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		F967AB6E16A3E8BA00BBE44D /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		F967AB7016A3E8BA00BBE44D /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		F967AB7216A3E8BA00BBE44D /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		F967AB7416A3E8BA00BBE44D /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		F967AB7B16A3E8FD00BBE44D /* NTRMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTRMainViewController.h; sourceTree = "<group>"; };
+		F967AB7C16A3E8FD00BBE44D /* NTRMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTRMainViewController.m; sourceTree = "<group>"; };
+		F967AB7E16A3E94800BBE44D /* NTRTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTRTableView.h; sourceTree = "<group>"; };
+		F967AB7F16A3E94800BBE44D /* NTRTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTRTableView.m; sourceTree = "<group>"; };
+		F967AB8116A3ECBE00BBE44D /* NTRTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTRTableViewCell.h; sourceTree = "<group>"; };
+		F967AB8216A3ECBE00BBE44D /* NTRTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTRTableViewCell.m; sourceTree = "<group>"; };
+		F967AB8816A3EFB800BBE44D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		F967AB8B16A3F9F700BBE44D /* NTRRoundedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTRRoundedRectView.h; sourceTree = "<group>"; };
+		F967AB8C16A3F9F700BBE44D /* NTRRoundedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTRRoundedRectView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		F967AB5716A3E8BA00BBE44D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F967AB8A16A3EFCB00BBE44D /* QuartzCore.framework in Frameworks */,
+				F967AB5F16A3E8BA00BBE44D /* UIKit.framework in Frameworks */,
+				F967AB6116A3E8BA00BBE44D /* Foundation.framework in Frameworks */,
+				F967AB6316A3E8BA00BBE44D /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		F967AB4F16A3E8BA00BBE44D = {
+			isa = PBXGroup;
+			children = (
+				F967AB6416A3E8BA00BBE44D /* NimbleTankRipoff */,
+				F967AB5D16A3E8BA00BBE44D /* Frameworks */,
+				F967AB5B16A3E8BA00BBE44D /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		F967AB5B16A3E8BA00BBE44D /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				F967AB5A16A3E8BA00BBE44D /* NimbleTankRipoff.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		F967AB5D16A3E8BA00BBE44D /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				F967AB8816A3EFB800BBE44D /* QuartzCore.framework */,
+				F967AB5E16A3E8BA00BBE44D /* UIKit.framework */,
+				F967AB6016A3E8BA00BBE44D /* Foundation.framework */,
+				F967AB6216A3E8BA00BBE44D /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		F967AB6416A3E8BA00BBE44D /* NimbleTankRipoff */ = {
+			isa = PBXGroup;
+			children = (
+				F967AB6D16A3E8BA00BBE44D /* AppDelegate.h */,
+				F967AB6E16A3E8BA00BBE44D /* AppDelegate.m */,
+				F967AB7B16A3E8FD00BBE44D /* NTRMainViewController.h */,
+				F967AB7C16A3E8FD00BBE44D /* NTRMainViewController.m */,
+				F967AB8B16A3F9F700BBE44D /* NTRRoundedRectView.h */,
+				F967AB8C16A3F9F700BBE44D /* NTRRoundedRectView.m */,
+				F967AB7E16A3E94800BBE44D /* NTRTableView.h */,
+				F967AB7F16A3E94800BBE44D /* NTRTableView.m */,
+				F967AB8116A3ECBE00BBE44D /* NTRTableViewCell.h */,
+				F967AB8216A3ECBE00BBE44D /* NTRTableViewCell.m */,
+				F967AB6516A3E8BA00BBE44D /* Supporting Files */,
+			);
+			path = NimbleTankRipoff;
+			sourceTree = "<group>";
+		};
+		F967AB6516A3E8BA00BBE44D /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				F967AB6616A3E8BA00BBE44D /* NimbleTankRipoff-Info.plist */,
+				F967AB6716A3E8BA00BBE44D /* InfoPlist.strings */,
+				F967AB6A16A3E8BA00BBE44D /* main.m */,
+				F967AB6C16A3E8BA00BBE44D /* NimbleTankRipoff-Prefix.pch */,
+				F967AB7016A3E8BA00BBE44D /* Default.png */,
+				F967AB7216A3E8BA00BBE44D /* Default@2x.png */,
+				F967AB7416A3E8BA00BBE44D /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		F967AB5916A3E8BA00BBE44D /* NimbleTankRipoff */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F967AB7816A3E8BA00BBE44D /* Build configuration list for PBXNativeTarget "NimbleTankRipoff" */;
+			buildPhases = (
+				F967AB5616A3E8BA00BBE44D /* Sources */,
+				F967AB5716A3E8BA00BBE44D /* Frameworks */,
+				F967AB5816A3E8BA00BBE44D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = NimbleTankRipoff;
+			productName = NimbleTankRipoff;
+			productReference = F967AB5A16A3E8BA00BBE44D /* NimbleTankRipoff.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F967AB5116A3E8BA00BBE44D /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = Augustine;
+			};
+			buildConfigurationList = F967AB5416A3E8BA00BBE44D /* Build configuration list for PBXProject "NimbleTankRipoff" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = F967AB4F16A3E8BA00BBE44D;
+			productRefGroup = F967AB5B16A3E8BA00BBE44D /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				F967AB5916A3E8BA00BBE44D /* NimbleTankRipoff */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		F967AB5816A3E8BA00BBE44D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F967AB6916A3E8BA00BBE44D /* InfoPlist.strings in Resources */,
+				F967AB7116A3E8BA00BBE44D /* Default.png in Resources */,
+				F967AB7316A3E8BA00BBE44D /* Default@2x.png in Resources */,
+				F967AB7516A3E8BA00BBE44D /* Default-568h@2x.png in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F967AB5616A3E8BA00BBE44D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F967AB6B16A3E8BA00BBE44D /* main.m in Sources */,
+				F967AB6F16A3E8BA00BBE44D /* AppDelegate.m in Sources */,
+				F967AB7D16A3E8FD00BBE44D /* NTRMainViewController.m in Sources */,
+				F967AB8016A3E94800BBE44D /* NTRTableView.m in Sources */,
+				F967AB8316A3ECBE00BBE44D /* NTRTableViewCell.m in Sources */,
+				F967AB8D16A3F9F700BBE44D /* NTRRoundedRectView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		F967AB6716A3E8BA00BBE44D /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F967AB6816A3E8BA00BBE44D /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		F967AB7616A3E8BA00BBE44D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		F967AB7716A3E8BA00BBE44D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		F967AB7916A3E8BA00BBE44D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NimbleTankRipoff/NimbleTankRipoff-Prefix.pch";
+				INFOPLIST_FILE = "NimbleTankRipoff/NimbleTankRipoff-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		F967AB7A16A3E8BA00BBE44D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "NimbleTankRipoff/NimbleTankRipoff-Prefix.pch";
+				INFOPLIST_FILE = "NimbleTankRipoff/NimbleTankRipoff-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		F967AB5416A3E8BA00BBE44D /* Build configuration list for PBXProject "NimbleTankRipoff" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F967AB7616A3E8BA00BBE44D /* Debug */,
+				F967AB7716A3E8BA00BBE44D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F967AB7816A3E8BA00BBE44D /* Build configuration list for PBXNativeTarget "NimbleTankRipoff" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F967AB7916A3E8BA00BBE44D /* Debug */,
+				F967AB7A16A3E8BA00BBE44D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = F967AB5116A3E8BA00BBE44D /* Project object */;
+}
