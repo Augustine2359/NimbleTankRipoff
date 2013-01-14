@@ -1,0 +1,6 @@
+//
+// Prefix header for all source files of the 'NimbleTankRipoffFramework' target in the 'NimbleTankRipoffFramework' project
+//
+
+#ifdef __OBJC__
+#endif

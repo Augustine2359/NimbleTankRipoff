@@ -7,11 +7,9 @@
 //
 
 #import "NTRMainViewController.h"
-#import "NTRRoundedRectView.h"
-#import "NTRTableView.h"
-#import "NTRTableViewCell.h"
 
 #import <QuartzCore/QuartzCore.h>
+#import "NTREverythingHeader.h"
 
 #define VIEW_OF_LAYER_BEING_ANIMATED @"animatingLayerOfThisView"
 
@@ -45,19 +43,19 @@
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-  [super viewWillAppear:animated];
-  CGSize roundedRectViewSize = ROUNDED_RECT_SMALL_SIZE;
-
-  CGFloat timeIntervalForWholeThing = 2;
-  
-  for (NSInteger index = 0; index < [self.wordsArray count]; index++) {
-    NTRRoundedRectView *roundedRectView = [[NTRRoundedRectView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds), roundedRectViewSize.width, roundedRectViewSize.height) andWord:[self.wordsArray objectAtIndex:index]];
-    roundedRectView.tag = ([self.wordsArray count] - 1) - index;
-    roundedRectView.layer.transform = CATransform3DIdentity;
-    [self.view addSubview:roundedRectView];
-
-    [self performSelector:@selector(addCurvedTranslationAnimationToRoundedRectView:) withObject:roundedRectView afterDelay:(timeIntervalForWholeThing/[self.wordsArray count]) * index];
-  }
+//  [super viewWillAppear:animated];
+//  CGSize roundedRectViewSize = ROUNDED_RECT_SMALL_SIZE;
+//
+//  CGFloat timeIntervalForWholeThing = 2;
+//  
+//  for (NSInteger index = 0; index < [self.wordsArray count]; index++) {
+//    NTRRoundedRectView *roundedRectView = [[NTRRoundedRectView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds), roundedRectViewSize.width, roundedRectViewSize.height) andWord:[self.wordsArray objectAtIndex:index]];
+//    roundedRectView.tag = ([self.wordsArray count] - 1) - index;
+//    roundedRectView.layer.transform = CATransform3DIdentity;
+//    [self.view addSubview:roundedRectView];
+//
+//    [self performSelector:@selector(addCurvedTranslationAnimationToRoundedRectView:) withObject:roundedRectView afterDelay:(timeIntervalForWholeThing/[self.wordsArray count]) * index];
+//  }
 }
 
 - (void)addCurvedTranslationAnimationToRoundedRectView:(NTRRoundedRectView *)roundedRectView {
