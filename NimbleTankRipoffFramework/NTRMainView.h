@@ -11,9 +11,17 @@
 #import "NTRRoundedRectView.h"
 
 @class NTRRoundedRectView;
+@class NTRMainView;
+
+@protocol NTRMainViewDelegate <NSObject>
+
+- (NSString *)wordForIndexPath:(NSIndexPath *)indexPath;
+
+@end
 
 @interface NTRMainView : UIView <NTRRoundedRectViewDelegate>
 
+@property (nonatomic, strong) id<NTRMainViewDelegate> delegate;
 - (id)initWithFrame:(CGRect)frame andTableViewDataSource:(id<UITableViewDataSource>)dataSource;
 - (void)setNTRTableViewDataSource:(id<UITableViewDataSource>)dataSource;
 

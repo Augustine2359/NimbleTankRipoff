@@ -13,6 +13,7 @@
 @interface NTRMainView() <UITableViewDelegate, NTRMoreInfoViewDelegate>
 
 @property (nonatomic, strong) NTRTableView *ntrTableView;
+@property (nonatomic, strong) NTRRoundedRectView *selectedRoundedRectView;
 
 @end
 
@@ -46,11 +47,12 @@
 #pragma mark - NTRRoundedRectViewDelegate
 
 - (void)selectRoundedRectToFlipOut:(NTRRoundedRectView *)roundedRectView {
+  self.selectedRoundedRectView = roundedRectView;
   BOOL willNTRTableViewScroll = [self.ntrTableView scrollToCellWithRoundedRectView:roundedRectView];
   if (willNTRTableViewScroll == NO) {
     self.ntrTableView.alpha = 0;
     [self createAndShowMoreInfoView];
-  }  
+  }
 }
 
 #pragma mark - UITableViewDelegate
@@ -71,6 +73,8 @@
 - (void)createAndShowMoreInfoView {
   NTRMoreInfoView *moreInfoView = [[NTRMoreInfoView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
   moreInfoView.delegate = self;
+  NSIndexPath *indexPath = [self.ntrTableView indexPathOfCellWithRoundedRectView:self.selectedRoundedRectView];
+  [moreInfoView setUpperHalfText:[self.delegate wordForIndexPath:indexPath]];
   [self addSubview:moreInfoView];
   
   NSArray *fakeRoundedRectViews = [self createFakeRoundedRectViews];

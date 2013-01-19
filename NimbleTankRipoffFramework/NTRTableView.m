@@ -40,4 +40,12 @@
   return NO;
 }
 
+- (NSIndexPath *)indexPathOfCellWithRoundedRectView:(NTRRoundedRectView *)roundedRectView {
+  for (NTRTableViewCell *cell in [self visibleCells]) {
+    if ([cell containsRoundedRectView:roundedRectView])
+      return [self indexPathForCell:cell];
+  }
+  return nil;
+}
+
 @end

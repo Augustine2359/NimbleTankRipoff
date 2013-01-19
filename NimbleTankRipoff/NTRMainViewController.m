@@ -15,7 +15,7 @@
 
 #define NTR_CELL_IDENTIFIER @"NTRCELL_IDENTIFIER"
 
-@interface NTRMainViewController () <UITableViewDataSource>
+@interface NTRMainViewController () <UITableViewDataSource, NTRMainViewDelegate>
 
 @property (nonatomic, strong) NTRMainView *ntrMainView;
 @property (nonatomic, strong) NTRTableView *ntrTableView;
@@ -37,6 +37,7 @@
   }
 
   self.ntrMainView = [[NTRMainView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)) andTableViewDataSource:self];
+  self.ntrMainView.delegate = self;
   [self.view addSubview:self.ntrMainView];
 }
 
@@ -107,6 +108,10 @@
   NTRRoundedRectView *roundedRectView = [anim valueForKey:VIEW_OF_LAYER_BEING_ANIMATED];
   if (CGRectIntersectsRect(self.view.frame, roundedRectView.frame) == NO)
     [roundedRectView removeFromSuperview];
+}
+
+- (NSString *)wordForIndexPath:(NSIndexPath *)indexPath {
+  return [self.wordsArray objectAtIndex:indexPath.row];
 }
 
 @end

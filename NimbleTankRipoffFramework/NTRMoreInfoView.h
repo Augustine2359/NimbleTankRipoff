@@ -27,5 +27,6 @@
 
 - (void)slideOutExtraRoundedRectViews;
 - (void)slideInExtraRoundedRectViews;
+- (void)setUpperHalfText:(NSString *)text;
 
 @end

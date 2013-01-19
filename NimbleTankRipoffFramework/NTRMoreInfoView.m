@@ -39,6 +39,10 @@
     return self;
 }
 
+- (void)setUpperHalfText:(NSString *)text {
+  [self.upperHalf setText:text];
+}
+
 - (void)slideOutExtraRoundedRectViews {
   for (NTRRoundedRectView *roundedRectView in self.subviews) {
     if ([roundedRectView isKindOfClass:[NTRRoundedRectView class]] == NO)
@@ -121,6 +125,7 @@
       roundedRectView.hidden = YES;
     }
     
+    self.upperHalf.alpha = 1;
     self.lowerHalf.alpha = 1;
     [self.lowerHalf fadeAlphaTo:1 completion:^(BOOL success) {
       if (success) {

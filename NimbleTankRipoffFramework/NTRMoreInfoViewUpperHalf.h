@@ -10,4 +10,6 @@
 
 @interface NTRMoreInfoViewUpperHalf : UIView
 
+- (void)setText:(NSString *)text;
+
 @end
