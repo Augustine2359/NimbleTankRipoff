@@ -15,8 +15,9 @@
 
 #define NTR_CELL_IDENTIFIER @"NTRCELL_IDENTIFIER"
 
-@interface NTRMainViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface NTRMainViewController () <UITableViewDataSource>
 
+@property (nonatomic, strong) NTRMainView *ntrMainView;
 @property (nonatomic, strong) NTRTableView *ntrTableView;
 @property (nonatomic, strong) NSMutableArray *wordsArray;
 
@@ -32,35 +33,56 @@
   self.wordsArray = [NSMutableArray array];
   for (NSInteger index = 0; index < 100; index++) {
     NSString *word = [NSString stringWithFormat:@"Word %d", index];
-//    [self.wordsArray addObject:word];
+    [self.wordsArray addObject:word];
   }
 
-  self.ntrTableView = [[NTRTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
-  self.ntrTableView.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
-  self.ntrTableView.dataSource = self;
-  self.ntrTableView.delegate = self;
-  [self.view addSubview:self.ntrTableView];
+  self.ntrMainView = [[NTRMainView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)) andTableViewDataSource:self];
+  [self.view addSubview:self.ntrMainView];
 }
 
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+  return 1;
+}
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+  return 100;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+ if ([tableView isKindOfClass:[NTRTableView class]] == NO)
+   return nil;
+  NTRTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NTR_CELL_IDENTIFIER];
+  if (cell == nil)
+    cell = [[NTRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NTR_CELL_IDENTIFIER flipOutSuperview:self.ntrMainView];
+            
+  [cell setWord:[self.wordsArray objectAtIndex:indexPath.row]];
+  
+  return cell;
+}
+
+#pragma mark - Unimplemented beginning animation
+
 - (void)viewWillAppear:(BOOL)animated {
-//  [super viewWillAppear:animated];
-//  CGSize roundedRectViewSize = ROUNDED_RECT_SMALL_SIZE;
-//
-//  CGFloat timeIntervalForWholeThing = 2;
-//  
-//  for (NSInteger index = 0; index < [self.wordsArray count]; index++) {
-//    NTRRoundedRectView *roundedRectView = [[NTRRoundedRectView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds), roundedRectViewSize.width, roundedRectViewSize.height) andWord:[self.wordsArray objectAtIndex:index]];
-//    roundedRectView.tag = ([self.wordsArray count] - 1) - index;
-//    roundedRectView.layer.transform = CATransform3DIdentity;
-//    [self.view addSubview:roundedRectView];
-//
-//    [self performSelector:@selector(addCurvedTranslationAnimationToRoundedRectView:) withObject:roundedRectView afterDelay:(timeIntervalForWholeThing/[self.wordsArray count]) * index];
-//  }
+  //  [super viewWillAppear:animated];
+  //  CGSize roundedRectViewSize = ROUNDED_RECT_SMALL_SIZE;
+  //
+  //  CGFloat timeIntervalForWholeThing = 2;
+  //
+  //  for (NSInteger index = 0; index < [self.wordsArray count]; index++) {
+  //    NTRRoundedRectView *roundedRectView = [[NTRRoundedRectView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.view.bounds), roundedRectViewSize.width, roundedRectViewSize.height) andWord:[self.wordsArray objectAtIndex:index]];
+  //    roundedRectView.tag = ([self.wordsArray count] - 1) - index;
+  //    roundedRectView.layer.transform = CATransform3DIdentity;
+  //    [self.view addSubview:roundedRectView];
+  //
+  //    [self performSelector:@selector(addCurvedTranslationAnimationToRoundedRectView:) withObject:roundedRectView afterDelay:(timeIntervalForWholeThing/[self.wordsArray count]) * index];
+  //  }
 }
 
 - (void)addCurvedTranslationAnimationToRoundedRectView:(NTRRoundedRectView *)roundedRectView {
   CGPoint curvedTranslationTarget = CGPointMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(self.view.bounds)/2);
-
+  
   CAKeyframeAnimation *curvedTranslationAnimation = [CAKeyframeAnimation animationWithKeyPath:@"position"];
   curvedTranslationAnimation.keyTimes = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0], [NSNumber numberWithFloat:0.5], [NSNumber numberWithFloat:1], nil];
   curvedTranslationAnimation.calculationMode = kCAAnimationPaced;
@@ -77,7 +99,7 @@
   [curvedTranslationAnimation setValue:roundedRectView forKey:VIEW_OF_LAYER_BEING_ANIMATED];
   
   roundedRectView.frame = CGRectMake(CGRectGetWidth(self.view.bounds)/2 - CGRectGetWidth(roundedRectView.bounds) * roundedRectView.tag, curvedTranslationTarget.y, CGRectGetWidth(roundedRectView.bounds), CGRectGetHeight(roundedRectView.bounds));
-
+  
   [roundedRectView.layer addAnimation:curvedTranslationAnimation forKey:@"curvedTranslationAndLeave"];
 }
 
@@ -85,32 +107,6 @@
   NTRRoundedRectView *roundedRectView = [anim valueForKey:VIEW_OF_LAYER_BEING_ANIMATED];
   if (CGRectIntersectsRect(self.view.frame, roundedRectView.frame) == NO)
     [roundedRectView removeFromSuperview];
-}
-
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-  return 1;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-  return 100;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return CGRectGetWidth(self.view.bounds)/2;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-  NTRTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NTR_CELL_IDENTIFIER];
-  if (cell == nil)
-    cell = [[NTRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NTR_CELL_IDENTIFIER];
-  
-  return cell;
-}
-
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-  DLog(@"scroll");
 }
 
 @end

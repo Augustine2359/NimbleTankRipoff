@@ -8,6 +8,14 @@
 
 #import <UIKit/UIKit.h>
 
+#import "NTRRoundedRectView.h"
+
 @interface NTRTableViewCell : UITableViewCell
+@property (nonatomic, strong) NTRRoundedRectView *roundedRectView;
+
+- (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier flipOutSuperview:(id <NTRRoundedRectViewDelegate>)flipOutSuperview;
+- (NSString *)word;
+- (void)setWord:(NSString *)zawaado;
+- (BOOL)containsRoundedRectView:(NTRRoundedRectView *)aRoundedRectView;
 
 @end

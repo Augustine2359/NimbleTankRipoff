@@ -10,8 +10,22 @@
 
 #define ROUNDED_RECT_SMALL_SIZE CGSizeMake(100,200)
 
+@class NTRRoundedRectView;
+
+@protocol NTRRoundedRectViewDelegate <NSObject>
+
+@optional
+- (void)selectRoundedRectToFlipOut:(NTRRoundedRectView *)roundedRectView;
+
+@end
+
 @interface NTRRoundedRectView : UIView
 
-- (id)initWithFrame:(CGRect)frame andWord:(NSString *)zawaado;
+@property (nonatomic, strong) id <NTRRoundedRectViewDelegate> delegate;
+
+- (NSString *)word;
+- (void)setWord:(NSString *)zawaado;
+- (void)hideWordButton:(BOOL)hidden;
+- (void)flipOutToView:(UIView *)view;
 
 @end

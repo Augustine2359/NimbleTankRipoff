@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+
+#import "NTRMainView.h"
 #import "NTRRoundedRectView.h"
 #import "NTRTableView.h"
 #import "NTRTableViewCell.h"
-
-@interface NTREverythingHeader : NSObject
-
-@end
+#import "NTRMoreInfoView.h"
+#import "NTRMoreInfoViewUpperHalf.h"
+#import "NTRMoreInfoViewLowerHalf.h"

@@ -7,6 +7,7 @@
 //
 
 #import "NTRTableView.h"
+#import "NTRTableViewCell.h"
 #import <QuartzCore/QuartzCore.h>
 
 @implementation NTRTableView
@@ -21,13 +22,22 @@
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
+- (BOOL)scrollToCellWithRoundedRectView:(NTRRoundedRectView *)roundedRectView {
+  NSIndexPath *indexPathToScrollTo;
+  for (NTRTableViewCell *cell in [self visibleCells]) {
+    if ([cell containsRoundedRectView:roundedRectView]) {
+      indexPathToScrollTo = [self indexPathForCell:cell];
+      CGPoint contentOffset = [self convertPoint:cell.bounds.origin fromView:cell];
+      contentOffset.y -= (CGRectGetHeight(self.bounds) - CGRectGetHeight(cell.bounds))/2;
+
+      if (CGPointEqualToPoint(contentOffset, self.contentOffset)) {
+        return NO;
+      }
+      [self setContentOffset:contentOffset animated:YES];
+      return YES;
+    }
+  }
+  return NO;
 }
-*/
 
 @end

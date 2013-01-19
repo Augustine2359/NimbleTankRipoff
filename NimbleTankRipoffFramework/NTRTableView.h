@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+#import "NTRRoundedRectView.h"
+
 @interface NTRTableView : UITableView
+
+- (BOOL)scrollToCellWithRoundedRectView:(NTRRoundedRectView *)roundedRectView;
 
 @end
