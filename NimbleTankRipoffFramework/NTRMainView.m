@@ -74,6 +74,8 @@
   NTRMoreInfoView *moreInfoView = [[NTRMoreInfoView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
   moreInfoView.delegate = self;
   NSIndexPath *indexPath = [self.ntrTableView indexPathOfCellWithRoundedRectView:self.selectedRoundedRectView];
+  NSDictionary *settings = [self.delegate settingsForMoreInfoViewForIndexPath:indexPath];
+  [moreInfoView setSettings:settings];
   [moreInfoView setUpperHalfText:[self.delegate wordForIndexPath:indexPath]];
   [self addSubview:moreInfoView];
   

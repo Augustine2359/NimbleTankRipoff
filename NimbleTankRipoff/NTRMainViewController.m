@@ -114,4 +114,14 @@
   return [self.wordsArray objectAtIndex:indexPath.row];
 }
 
+- (NSDictionary *)settingsForMoreInfoViewForIndexPath:(NSIndexPath *)indexPath {
+  NSInteger amount = indexPath.row % 10;
+  if (amount < 1)
+    amount = 1;
+  CGFloat floatAmount = amount * 1.0 / 10;
+  BOOL shouldFlip = indexPath.row % 2;
+  NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:floatAmount], LOWER_HALF_RATIO, [NSNumber numberWithBool:shouldFlip], SHOULD_FLIP_TO_LOWER_HALF, nil];
+  return settings;
+}
+
 @end

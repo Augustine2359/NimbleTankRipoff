@@ -18,6 +18,8 @@
 
 @property (nonatomic, strong) NTRMoreInfoViewUpperHalf *upperHalf;
 @property (nonatomic, strong) NTRMoreInfoViewLowerHalf *lowerHalf;
+@property (nonatomic) CGFloat lowerHalfRatio;
+@property (nonatomic) BOOL shouldFlipToLowerHalf;
 @property (nonatomic, strong) NTRRoundedRectView *middleRoundedRectView;
 
 @end
@@ -28,6 +30,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+      self.lowerHalfRatio = 0.5;
+      self.shouldFlipToLowerHalf = YES;
       self.upperHalf = [[NTRMoreInfoViewUpperHalf alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
       self.upperHalf.backgroundColor = [UIColor whiteColor];
       self.upperHalf.alpha = 0;
@@ -35,12 +39,35 @@
       self.lowerHalf = [[NTRMoreInfoViewLowerHalf alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame)/2, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
       self.lowerHalf.alpha = 0;
       [self addSubview:self.lowerHalf];
+      [self resizeHalves];
     }
     return self;
 }
 
 - (void)setUpperHalfText:(NSString *)text {
   [self.upperHalf setText:text];
+}
+
+- (void)setSettings:(NSDictionary *)settings {
+  self.lowerHalfRatio = [[settings objectForKey:LOWER_HALF_RATIO] floatValue];
+  self.shouldFlipToLowerHalf = [[settings objectForKey:SHOULD_FLIP_TO_LOWER_HALF] boolValue];
+  [self resizeHalves];
+}
+
+- (void)resizeHalves {
+  CGRect upperHalfFrame = CGRectZero;
+  upperHalfFrame.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) * (1 - self.lowerHalfRatio));
+
+  CGRect lowerHalfFrame = CGRectZero;
+  lowerHalfFrame.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) * self.lowerHalfRatio);
+
+  if (self.shouldFlipToLowerHalf)
+    lowerHalfFrame.origin.y = CGRectGetMaxY(upperHalfFrame);
+  else
+    upperHalfFrame.origin.y = CGRectGetMaxY(lowerHalfFrame);
+
+  self.upperHalf.frame = upperHalfFrame;
+  self.lowerHalf.frame = lowerHalfFrame;
 }
 
 - (void)slideOutExtraRoundedRectViews {
@@ -83,11 +110,10 @@
   CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
   resizeAnimation.fromValue = [NSValue valueWithCGRect:roundedRectView.layer.bounds];
   CGRect newBounds = self.lowerHalf.layer.bounds;
-  CGFloat width = newBounds.size.width;
+  CGFloat newWidth = newBounds.size.width;
   newBounds.size.width = newBounds.size.height;
-  newBounds.size.height = width;
+  newBounds.size.height = newWidth;
   resizeAnimation.toValue = [NSValue valueWithCGRect:newBounds];
-  DLog(@"%@ %@", NSStringFromCGRect(self.lowerHalf.layer.bounds), NSStringFromCGRect(self.lowerHalf.layer.frame));
   roundedRectView.layer.bounds = newBounds;
   
   CABasicAnimation *cornerRadiusRemovalAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
@@ -185,13 +211,15 @@
   CGFloat animationDuration = 2;
   
   CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-  DLog(@"%@", NSStringFromCGPoint(self.middleRoundedRectView.layer.position));
   translateAnimation.fromValue = [NSValue valueWithCGPoint:self.middleRoundedRectView.layer.position];
   translateAnimation.toValue = [NSValue valueWithCGPoint:newMiddleRoundedRectView.layer.position];
-  DLog(@"%@", NSStringFromCGPoint(newMiddleRoundedRectView.layer.position));
   
   CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-  resizeAnimation.fromValue = [NSValue valueWithCGRect:self.middleRoundedRectView.layer.bounds];
+  CGRect oldBounds = self.lowerHalf.layer.bounds;
+  CGFloat oldWidth = CGRectGetWidth(oldBounds);
+  oldBounds.size.width = oldBounds.size.height;
+  oldBounds.size.height = oldWidth;
+  resizeAnimation.fromValue = [NSValue valueWithCGRect:oldBounds];
   CGRect newBounds = newMiddleRoundedRectView.layer.bounds;
   resizeAnimation.toValue = [NSValue valueWithCGRect:newBounds];
   

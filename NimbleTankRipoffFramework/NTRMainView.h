@@ -16,6 +16,7 @@
 @protocol NTRMainViewDelegate <NSObject>
 
 - (NSString *)wordForIndexPath:(NSIndexPath *)indexPath;
+- (NSDictionary *)settingsForMoreInfoViewForIndexPath:(NSIndexPath *)indexPath;
 
 @end
 
