@@ -36,7 +36,7 @@
 
     self.wordButton = [UIButton buttonWithType:UIButtonTypeCustom];
     self.wordButton.frame = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
-    self.wordButton.autoresizingMask = UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
+    self.wordButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
     self.wordButton.backgroundColor = [UIColor clearColor];
     [self.wordButton addTarget:self action:@selector(onWordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:self.wordButton];
@@ -50,11 +50,6 @@
   }
   
   return self;
-}
-
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-//  DLog(@"%@ %@", NSStringFromCGPoint(point), event);
-  return [self.wordButton hitTest:point withEvent:event];
 }
 
 - (NSString *)word {
