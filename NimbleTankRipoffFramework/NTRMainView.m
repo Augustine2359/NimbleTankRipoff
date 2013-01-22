@@ -26,6 +26,9 @@
     self.ntrTableView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
     self.ntrTableView.delegate = self;
     [self addSubview:self.ntrTableView];
+
+    self.sizeOfRoundedRects = CGSizeMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.bounds));
+    self.spacingBetweenRoundedRects = 20;
   }
   return self;
 }
@@ -58,7 +61,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return CGRectGetWidth(self.bounds)/2;
+  return self.sizeOfRoundedRects.width + self.spacingBetweenRoundedRects/2;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -76,7 +79,6 @@
   NSIndexPath *indexPath = [self.ntrTableView indexPathOfCellWithRoundedRectView:self.selectedRoundedRectView];
   NSDictionary *settings = [self.delegate settingsForMoreInfoViewForIndexPath:indexPath];
   [moreInfoView setSettings:settings];
-  [moreInfoView setUpperHalfText:[self.delegate wordForIndexPath:indexPath]];
   [self addSubview:moreInfoView];
   
   NSArray *fakeRoundedRectViews = [self createFakeRoundedRectViews];

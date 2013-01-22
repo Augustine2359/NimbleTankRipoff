@@ -16,11 +16,12 @@
 
 @interface NTRMoreInfoView()
 
-@property (nonatomic, strong) NTRMoreInfoViewUpperHalf *upperHalf;
-@property (nonatomic, strong) NTRMoreInfoViewLowerHalf *lowerHalf;
-@property (nonatomic) CGFloat lowerHalfRatio;
-@property (nonatomic) BOOL shouldFlipToLowerHalf;
+@property (nonatomic, strong) UIView *primaryView;
+@property (nonatomic, strong) UIView *secondaryView;
+@property (nonatomic) CGFloat primaryViewRatio;
 @property (nonatomic, strong) NTRRoundedRectView *middleRoundedRectView;
+@property (nonatomic, strong) UIButton *closeButton;
+@property (nonatomic) enum PrimaryViewOnWhichSide primaryViewOnWhichSide;
 
 @end
 
@@ -30,51 +31,112 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-      self.lowerHalfRatio = 0.5;
-      self.shouldFlipToLowerHalf = YES;
-      self.upperHalf = [[NTRMoreInfoViewUpperHalf alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
-      self.upperHalf.backgroundColor = [UIColor whiteColor];
-      self.upperHalf.alpha = 0;
-      [self addSubview:self.upperHalf];
-      self.lowerHalf = [[NTRMoreInfoViewLowerHalf alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame)/2, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
-      self.lowerHalf.alpha = 0;
-      [self addSubview:self.lowerHalf];
-      [self resizeHalves];
+      self.primaryViewRatio = 0.5;
+      self.primaryViewOnWhichSide = PrimaryViewOnBottom;
+
+      self.secondaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
+      self.secondaryView.backgroundColor = [UIColor whiteColor];
+      self.secondaryView.alpha = 0;
+
+      [self addSubview:self.secondaryView];
+      self.primaryView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame)/2, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
+      self.primaryView.alpha = 0;
+      [self addSubview:self.primaryView];
+      [self reframeSubviews];
+
+      self.closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+      [self.closeButton setTitle:@"Close" forState:UIControlStateNormal];
+      self.closeButton.frame = CGRectMake(0, 0, 100, 100);
+      self.closeButton.alpha = 0;
+      [self.closeButton addTarget:self action:@selector(onCloseButton:) forControlEvents:UIControlEventTouchUpInside];
+      [self.primaryView addSubview:self.closeButton];
     }
     return self;
 }
 
-- (void)setUpperHalfText:(NSString *)text {
-  [self.upperHalf setText:text];
+- (CGSize)sizeOfPrimaryViewForPrimaryViewRatio:(CGFloat)ratio {
+  return CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) * ratio);
+}
+
+- (CGSize)sizeOfSecondaryViewForPrimaryViewRatio:(CGFloat)ratio {
+  return CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) * (1 - ratio));
 }
 
 - (void)setSettings:(NSDictionary *)settings {
-  self.lowerHalfRatio = [[settings objectForKey:LOWER_HALF_RATIO] floatValue];
-  self.shouldFlipToLowerHalf = [[settings objectForKey:SHOULD_FLIP_TO_LOWER_HALF] boolValue];
-  [self resizeHalves];
+  BOOL containsPrimaryViewRatio = ([settings objectForKey:PRIMARY_VIEW_RATIO] != nil) && ([[settings objectForKey:PRIMARY_VIEW_RATIO] isKindOfClass:[NSNumber class]]);
+  if (containsPrimaryViewRatio)
+    self.primaryViewRatio = [[settings objectForKey:PRIMARY_VIEW_RATIO] floatValue];
+
+  BOOL containsPrimaryViewOnWhichSide = ([settings objectForKey:PRIMARY_VIEW_ON_WHICH_SIDE] != nil) && ([[settings objectForKey:PRIMARY_VIEW_ON_WHICH_SIDE] isKindOfClass:[NSNumber class]]);
+  if (containsPrimaryViewOnWhichSide)
+    self.primaryViewOnWhichSide = [[settings objectForKey:PRIMARY_VIEW_ON_WHICH_SIDE] intValue];
+
+  BOOL containsPrimaryView = ([settings objectForKey:PRIMARY_VIEW] != nil) && ([[settings objectForKey:PRIMARY_VIEW] isKindOfClass:[UIView class]]);
+  if (containsPrimaryView) {
+    for (UIView *subview in self.primaryView.subviews)
+      [subview removeFromSuperview];
+    UIView *subview = [settings objectForKey:PRIMARY_VIEW];
+    subview.alpha = 0;
+    [self.primaryView addSubview:[settings objectForKey:PRIMARY_VIEW]];
+    [self.primaryView addSubview:self.closeButton];
+  }
+
+  BOOL containsSecondaryView = ([settings objectForKey:SECONDARY_VIEW] != nil) && ([[settings objectForKey:SECONDARY_VIEW] isKindOfClass:[UIView class]]);
+  if (containsSecondaryView ) {
+    for (UIView *subview in self.secondaryView.subviews)
+      [subview removeFromSuperview];
+    UIView *subview = [settings objectForKey:SECONDARY_VIEW];
+    subview.alpha = 0;
+    [self.secondaryView addSubview:[settings objectForKey:SECONDARY_VIEW]];
+  }
+
+  [self reframeSubviews];
 }
 
-- (void)resizeHalves {
-  CGRect upperHalfFrame = CGRectZero;
-  upperHalfFrame.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) * (1 - self.lowerHalfRatio));
+- (void)reframeSubviews {
+  CGRect primaryViewFrame = CGRectZero;
+  CGRect secondaryViewFrame = CGRectZero;
 
-  CGRect lowerHalfFrame = CGRectZero;
-  lowerHalfFrame.size = CGSizeMake(CGRectGetWidth(self.frame), CGRectGetHeight(self.frame) * self.lowerHalfRatio);
+  primaryViewFrame.size = self.frame.size;
+  secondaryViewFrame.size = self.frame.size;
 
-  if (self.shouldFlipToLowerHalf)
-    lowerHalfFrame.origin.y = CGRectGetMaxY(upperHalfFrame);
-  else
-    upperHalfFrame.origin.y = CGRectGetMaxY(lowerHalfFrame);
+  if ((self.primaryViewOnWhichSide == PrimaryViewOnLeft) || (self.primaryViewOnWhichSide == PrimaryViewOnRight)) {
+    primaryViewFrame.size.width *= self.primaryViewRatio;
+    secondaryViewFrame.size.width *= (1 - self.primaryViewRatio);
+  }
+  else {
+    primaryViewFrame.size.height *= self.primaryViewRatio;
+    secondaryViewFrame.size.height *= (1 - self.primaryViewRatio);
+  }
 
-  self.upperHalf.frame = upperHalfFrame;
-  self.lowerHalf.frame = lowerHalfFrame;
+  switch (self.primaryViewOnWhichSide) {
+    case PrimaryViewOnBottom:
+      primaryViewFrame.origin.y = CGRectGetMaxY(secondaryViewFrame);
+      break;
+    case PrimaryViewOnTop:
+      secondaryViewFrame.origin.y = CGRectGetMaxY(primaryViewFrame);
+      break;
+    case PrimaryViewOnLeft:
+      secondaryViewFrame.origin.x = CGRectGetMaxX(primaryViewFrame);
+      break;
+    case PrimaryViewOnRight:
+      primaryViewFrame.origin.x = CGRectGetMaxX(secondaryViewFrame);
+      break;
+    default: //default is bottom
+      primaryViewFrame.origin.y = CGRectGetMaxY(secondaryViewFrame);
+      break;
+  }
+
+  self.secondaryView.frame = secondaryViewFrame;
+  self.primaryView.frame = primaryViewFrame;
 }
 
 - (void)slideOutExtraRoundedRectViews {
   for (NTRRoundedRectView *roundedRectView in self.subviews) {
     if ([roundedRectView isKindOfClass:[NTRRoundedRectView class]] == NO)
       continue;
-    if (CGRectContainsPoint(roundedRectView.frame, self.center)) {
+    BOOL rectContainsMiddle = ((CGRectGetMinX(roundedRectView.frame) < self.center.x) && (CGRectGetMaxX(roundedRectView.frame) > self.center.x));
+    if (rectContainsMiddle) {
       self.middleRoundedRectView = roundedRectView;
       continue;
     }
@@ -96,20 +158,20 @@
 }
 
 - (void)flipOutRoundedRectView:(NTRRoundedRectView *)roundedRectView {
-//  [roundedRectView flipOutToView:self.lowerHalf];
+//  [roundedRectView flipOutToView:self.primaryView];
   
-  self.lowerHalf.backgroundColor = roundedRectView.backgroundColor;
+  self.primaryView.backgroundColor = roundedRectView.backgroundColor;
   
   CGFloat animationDuration = 2;
 
   CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
   translateAnimation.fromValue = [NSValue valueWithCGPoint:roundedRectView.layer.position];
-  translateAnimation.toValue = [NSValue valueWithCGPoint:self.lowerHalf.layer.position];
-  roundedRectView.layer.position = self.lowerHalf.layer.position;
+  translateAnimation.toValue = [NSValue valueWithCGPoint:self.primaryView.layer.position];
+  roundedRectView.layer.position = self.primaryView.layer.position;
   
   CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
   resizeAnimation.fromValue = [NSValue valueWithCGRect:roundedRectView.layer.bounds];
-  CGRect newBounds = self.lowerHalf.layer.bounds;
+  CGRect newBounds = self.primaryView.layer.bounds;
   CGFloat newWidth = newBounds.size.width;
   newBounds.size.width = newBounds.size.height;
   newBounds.size.height = newWidth;
@@ -150,25 +212,33 @@
     if ([roundedRectView isEqual:self.middleRoundedRectView]) {
       roundedRectView.hidden = YES;
     }
-    
-    self.upperHalf.alpha = 1;
-    self.lowerHalf.alpha = 1;
-    [self.lowerHalf fadeAlphaTo:1 completion:^(BOOL success) {
-      if (success) {
-        [self.lowerHalf setCloseButtonTarget:self];
-      }
-    }];
+
+    [self fadeSubviews];
     return;
   }
-  
+
   [roundedRectView removeFromSuperview];
   [self.delegate dismissMoreInfoView:self];
 }
 
+- (void)fadeSubviews {
+  self.secondaryView.alpha = 1;
+  self.primaryView.alpha = 1;
+
+  CGFloat fadeDuration = 0.5;
+  [UIView animateWithDuration:fadeDuration animations:^ {
+    self.closeButton.alpha = 1;
+    for (UIView *subview in self.primaryView.subviews)
+      subview.alpha = 1;
+    for (UIView *subview in self.secondaryView.subviews)
+      subview.alpha = 1;
+  }];
+}
+
 - (void)onCloseButton:(UIButton *)button {
   [self.delegate prepareToDismissMoreInfoView:self];
-  self.upperHalf.hidden = YES;
-  self.lowerHalf.hidden = YES;
+  self.secondaryView.hidden = YES;
+  self.primaryView.hidden = YES;
 //  [self flipInRoundedRectView];
 }
 
@@ -180,7 +250,8 @@
   for (NTRRoundedRectView *roundedRectView in self.subviews) {
     if ([roundedRectView isKindOfClass:[NTRRoundedRectView class]] == NO)
       continue;
-    if (CGRectContainsPoint(roundedRectView.frame, self.center)) {
+    BOOL rectContainsMiddle = ((CGRectGetMinX(roundedRectView.frame) < self.center.x) && (CGRectGetMaxX(roundedRectView.frame) > self.center.x));
+    if (rectContainsMiddle) {
       if ([roundedRectView isEqual:self.middleRoundedRectView])
         continue;
       else
@@ -215,7 +286,7 @@
   translateAnimation.toValue = [NSValue valueWithCGPoint:newMiddleRoundedRectView.layer.position];
   
   CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-  CGRect oldBounds = self.lowerHalf.layer.bounds;
+  CGRect oldBounds = self.primaryView.layer.bounds;
   CGFloat oldWidth = CGRectGetWidth(oldBounds);
   oldBounds.size.width = oldBounds.size.height;
   oldBounds.size.height = oldWidth;

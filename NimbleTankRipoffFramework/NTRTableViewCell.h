@@ -17,5 +17,6 @@
 - (NSString *)word;
 - (void)setWord:(NSString *)zawaado;
 - (BOOL)containsRoundedRectView:(NTRRoundedRectView *)aRoundedRectView;
+- (void)setRoundedRectSize:(CGSize)size andSpacing:(CGFloat)spacing;
 
 @end

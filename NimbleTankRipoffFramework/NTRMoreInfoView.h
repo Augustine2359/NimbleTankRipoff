@@ -8,17 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
-#import "NTRMoreInfoViewUpperHalf.h"
-#import "NTRMoreInfoViewLowerHalf.h"
-
 //Keys for settings that can be put in the settings dictionary
-#define LOWER_HALF_RATIO @"lowerHalfRatio"
-#define SHOULD_FLIP_TO_LOWER_HALF @"shouldFlipToLowerHalf"
+#define PRIMARY_VIEW_RATIO @"primaryViewRatio"
+#define PRIMARY_VIEW_ON_WHICH_SIDE @"primaryViewOnWhichSide"
 #define IS_VERTICALLY_ORIENTED @"isVerticallyOriented"
-#define LOWER_HALF_VIEW @"lowerHalfView"
-#define UPPER_HALF_VIEW @"upperHalfView"
+#define PRIMARY_VIEW @"primaryView"
+#define SECONDARY_VIEW @"secondaryView"
 
 @class NTRMoreInfoView;
+
+enum PrimaryViewOnWhichSide {
+  PrimaryViewOnBottom = 0,
+  PrimaryViewOnTop = 1,
+  PrimaryViewOnLeft = 2,
+  PrimaryViewOnRight = 3
+  };
 
 @protocol NTRMoreInfoViewDelegate <NSObject>
 
@@ -34,8 +38,8 @@
 
 - (void)slideOutExtraRoundedRectViews;
 - (void)slideInExtraRoundedRectViews;
-- (void)setUpperHalfText:(NSString *)text;
-
 - (void)setSettings:(NSDictionary *)settings;
+- (CGSize)sizeOfPrimaryViewForPrimaryViewRatio:(CGFloat)ratio;
+- (CGSize)sizeOfSecondaryViewForPrimaryViewRatio:(CGFloat)ratio;
 
 @end

@@ -39,6 +39,9 @@
   self.ntrMainView = [[NTRMainView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)) andTableViewDataSource:self];
   self.ntrMainView.delegate = self;
   [self.view addSubview:self.ntrMainView];
+
+  self.ntrMainView.sizeOfRoundedRects = CGSizeMake(200, 100);
+  self.ntrMainView.spacingBetweenRoundedRects = 100;
 }
 
 #pragma mark - UITableViewDataSource
@@ -59,13 +62,14 @@
     cell = [[NTRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NTR_CELL_IDENTIFIER flipOutSuperview:self.ntrMainView];
             
   [cell setWord:[self.wordsArray objectAtIndex:indexPath.row]];
+  [cell setRoundedRectSize:[self.ntrMainView sizeOfRoundedRects] andSpacing:self.ntrMainView.spacingBetweenRoundedRects];
   
   return cell;
 }
 
 #pragma mark - Unimplemented beginning animation
 
-- (void)viewWillAppear:(BOOL)animated {
+//- (void)viewWillAppear:(BOOL)animated {
   //  [super viewWillAppear:animated];
   //  CGSize roundedRectViewSize = ROUNDED_RECT_SMALL_SIZE;
   //
@@ -79,7 +83,7 @@
   //
   //    [self performSelector:@selector(addCurvedTranslationAnimationToRoundedRectView:) withObject:roundedRectView afterDelay:(timeIntervalForWholeThing/[self.wordsArray count]) * index];
   //  }
-}
+//}
 
 - (void)addCurvedTranslationAnimationToRoundedRectView:(NTRRoundedRectView *)roundedRectView {
   CGPoint curvedTranslationTarget = CGPointMake(CGRectGetWidth(self.view.bounds)/2, CGRectGetHeight(self.view.bounds)/2);
@@ -119,8 +123,17 @@
   if (amount < 1)
     amount = 1;
   CGFloat floatAmount = amount * 1.0 / 10;
-  BOOL shouldFlip = indexPath.row % 2;
-  NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithFloat:floatAmount], LOWER_HALF_RATIO, [NSNumber numberWithBool:shouldFlip], SHOULD_FLIP_TO_LOWER_HALF, nil];
+
+  UIView *secondaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
+  secondaryView.backgroundColor = [UIColor blueColor];
+
+  enum PrimaryViewOnWhichSide primaryViewOnWhichSide = indexPath.row%4;
+
+  NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithFloat:floatAmount], PRIMARY_VIEW_RATIO,
+                            [NSNumber numberWithInt:primaryViewOnWhichSide], PRIMARY_VIEW_ON_WHICH_SIDE,
+                            secondaryView, SECONDARY_VIEW,
+                            nil];
   return settings;
 }
 

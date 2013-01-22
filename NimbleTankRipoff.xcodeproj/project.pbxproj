@@ -23,10 +23,6 @@
 /* Begin PBXBuildFile section */
 		F948EDCD16A68A64004124C6 /* NTRMoreInfoView.h in Headers */ = {isa = PBXBuildFile; fileRef = F948EDCB16A68A63004124C6 /* NTRMoreInfoView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F948EDCE16A68A64004124C6 /* NTRMoreInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = F948EDCC16A68A64004124C6 /* NTRMoreInfoView.m */; };
-		F948EDD116A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.h in Headers */ = {isa = PBXBuildFile; fileRef = F948EDCF16A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F948EDD216A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.m in Sources */ = {isa = PBXBuildFile; fileRef = F948EDD016A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.m */; };
-		F948EDD516A68A88004124C6 /* NTRMoreInfoViewLowerHalf.h in Headers */ = {isa = PBXBuildFile; fileRef = F948EDD316A68A88004124C6 /* NTRMoreInfoViewLowerHalf.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F948EDD616A68A88004124C6 /* NTRMoreInfoViewLowerHalf.m in Sources */ = {isa = PBXBuildFile; fileRef = F948EDD416A68A88004124C6 /* NTRMoreInfoViewLowerHalf.m */; };
 		F967AB5F16A3E8BA00BBE44D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967AB5E16A3E8BA00BBE44D /* UIKit.framework */; };
 		F967AB6116A3E8BA00BBE44D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967AB6016A3E8BA00BBE44D /* Foundation.framework */; };
 		F967AB6316A3E8BA00BBE44D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F967AB6216A3E8BA00BBE44D /* CoreGraphics.framework */; };
@@ -55,10 +51,6 @@
 /* Begin PBXFileReference section */
 		F948EDCB16A68A63004124C6 /* NTRMoreInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTRMoreInfoView.h; sourceTree = "<group>"; };
 		F948EDCC16A68A64004124C6 /* NTRMoreInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTRMoreInfoView.m; sourceTree = "<group>"; };
-		F948EDCF16A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTRMoreInfoViewUpperHalf.h; sourceTree = "<group>"; };
-		F948EDD016A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTRMoreInfoViewUpperHalf.m; sourceTree = "<group>"; };
-		F948EDD316A68A88004124C6 /* NTRMoreInfoViewLowerHalf.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NTRMoreInfoViewLowerHalf.h; sourceTree = "<group>"; };
-		F948EDD416A68A88004124C6 /* NTRMoreInfoViewLowerHalf.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTRMoreInfoViewLowerHalf.m; sourceTree = "<group>"; };
 		F967AB5A16A3E8BA00BBE44D /* NimbleTankRipoff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NimbleTankRipoff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F967AB5E16A3E8BA00BBE44D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		F967AB6016A3E8BA00BBE44D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -189,10 +181,6 @@
 				F967AC0C16A460BB00BBE44D /* NTRTableViewCell.m */,
 				F948EDCB16A68A63004124C6 /* NTRMoreInfoView.h */,
 				F948EDCC16A68A64004124C6 /* NTRMoreInfoView.m */,
-				F948EDCF16A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.h */,
-				F948EDD016A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.m */,
-				F948EDD316A68A88004124C6 /* NTRMoreInfoViewLowerHalf.h */,
-				F948EDD416A68A88004124C6 /* NTRMoreInfoViewLowerHalf.m */,
 			);
 			path = NimbleTankRipoffFramework;
 			sourceTree = "<group>";
@@ -220,8 +208,6 @@
 				F967AC0F16A460BB00BBE44D /* NTRTableView.h in Headers */,
 				F967AC1116A460BB00BBE44D /* NTRTableViewCell.h in Headers */,
 				F948EDCD16A68A64004124C6 /* NTRMoreInfoView.h in Headers */,
-				F948EDD116A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.h in Headers */,
-				F948EDD516A68A88004124C6 /* NTRMoreInfoViewLowerHalf.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -349,8 +335,6 @@
 				F967AC1016A460BB00BBE44D /* NTRTableView.m in Sources */,
 				F967AC1216A460BB00BBE44D /* NTRTableViewCell.m in Sources */,
 				F948EDCE16A68A64004124C6 /* NTRMoreInfoView.m in Sources */,
-				F948EDD216A68A7A004124C6 /* NTRMoreInfoViewUpperHalf.m in Sources */,
-				F948EDD616A68A88004124C6 /* NTRMoreInfoViewLowerHalf.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

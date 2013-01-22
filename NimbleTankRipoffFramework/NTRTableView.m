@@ -18,6 +18,8 @@
     if (self) {
       self.layer.transform = CATransform3DMakeRotation(-M_PI_2, 0, 0, 1);
       self.separatorStyle = UITableViewCellSeparatorStyleNone;
+      self.showsHorizontalScrollIndicator = NO;
+      self.showsVerticalScrollIndicator = NO;
     }
     return self;
 }

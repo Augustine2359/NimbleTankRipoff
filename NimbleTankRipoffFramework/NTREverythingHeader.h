@@ -13,5 +13,3 @@
 #import "NTRTableView.h"
 #import "NTRTableViewCell.h"
 #import "NTRMoreInfoView.h"
-#import "NTRMoreInfoViewUpperHalf.h"
-#import "NTRMoreInfoViewLowerHalf.h"

@@ -18,7 +18,7 @@
     if (self) {
       self.selectionStyle = UITableViewCellSelectionStyleNone;
       self.contentView.transform = CGAffineTransformMakeRotation(M_PI_2);
-      
+
       CGFloat offset = 10;
       self.roundedRectView = [[NTRRoundedRectView alloc] initWithFrame:CGRectMake(offset,
                                                                                   offset,
@@ -42,6 +42,14 @@
 
 - (BOOL)containsRoundedRectView:(NTRRoundedRectView *)aRoundedRectView {
   return [self.roundedRectView isEqual:aRoundedRectView];
+}
+
+- (void)setRoundedRectSize:(CGSize)size andSpacing:(CGFloat)spacing {
+  self.roundedRectView.frame = CGRectMake(spacing/2,
+                                          (CGRectGetWidth(self.contentView.frame) - size.height)/2,
+                                          size.width,
+                                          size.height);
+  self.roundedRectView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
 @end
