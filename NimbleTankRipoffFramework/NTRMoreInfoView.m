@@ -145,7 +145,7 @@
       targetRect = CGRectOffset(roundedRectView.frame, -CGRectGetWidth(self.frame), 0);
     else
       targetRect = CGRectOffset(roundedRectView.frame, CGRectGetWidth(self.frame), 0);
-    [UIView animateWithDuration:5 animations:^ {
+    [UIView animateWithDuration:5 delay:0 options:UIViewAnimationCurveEaseOut animations:^ {
       roundedRectView.alpha = 0;
       roundedRectView.frame = targetRect;
     } completion:^(BOOL finished) {
@@ -263,7 +263,7 @@
       roundedRectView.frame = CGRectOffset(roundedRectView.frame, -CGRectGetWidth(self.frame), 0);
     else
       roundedRectView.frame = CGRectOffset(roundedRectView.frame, CGRectGetWidth(self.frame), 0);
-    [UIView animateWithDuration:1 animations:^ {
+    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationCurveEaseIn animations:^ {
       roundedRectView.alpha = 1;
       roundedRectView.frame = targetRect;
     } completion:^(BOOL finished) {

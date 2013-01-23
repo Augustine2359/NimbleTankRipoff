@@ -61,7 +61,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return self.sizeOfRoundedRects.width + self.spacingBetweenRoundedRects/2;
+  return self.sizeOfRoundedRects.width + self.spacingBetweenRoundedRects;
 }
 
 #pragma mark - UIScrollViewDelegate
