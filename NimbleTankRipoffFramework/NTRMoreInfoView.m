@@ -131,6 +131,8 @@
   self.primaryView.frame = primaryViewFrame;
 }
 
+#pragma mark - Sliding out animation
+
 - (void)slideOutExtraRoundedRectViews {
   for (NTRRoundedRectView *roundedRectView in self.subviews) {
     if ([roundedRectView isKindOfClass:[NTRRoundedRectView class]] == NO)
@@ -205,42 +207,7 @@
   });
 }
 
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
-  NTRRoundedRectView *roundedRectView = [anim valueForKey:VIEW_BEING_ANIMATED];
-
-  if ([[anim valueForKey:IS_ROUNDED_RECT_VIEW_FLIPPING_OUT] boolValue]) {
-    if ([roundedRectView isEqual:self.middleRoundedRectView]) {
-      roundedRectView.hidden = YES;
-    }
-
-    [self fadeSubviews];
-    return;
-  }
-
-  [roundedRectView removeFromSuperview];
-  [self.delegate dismissMoreInfoView:self];
-}
-
-- (void)fadeSubviews {
-  self.secondaryView.alpha = 1;
-  self.primaryView.alpha = 1;
-
-  CGFloat fadeDuration = 0.5;
-  [UIView animateWithDuration:fadeDuration animations:^ {
-    self.closeButton.alpha = 1;
-    for (UIView *subview in self.primaryView.subviews)
-      subview.alpha = 1;
-    for (UIView *subview in self.secondaryView.subviews)
-      subview.alpha = 1;
-  }];
-}
-
-- (void)onCloseButton:(UIButton *)button {
-  [self.delegate prepareToDismissMoreInfoView:self];
-  self.secondaryView.hidden = YES;
-  self.primaryView.hidden = YES;
-//  [self flipInRoundedRectView];
-}
+#pragma mark - Sliding in animation
 
 - (void)slideInExtraRoundedRectViews {
   CGRect targetRect;
@@ -315,6 +282,45 @@
   dispatch_after(dispatch_time(DISPATCH_TIME_NOW, animationDuration/2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
     [self.middleRoundedRectView hideWordButton:NO];
   });
+}
+
+#pragma mark - CAAnimationDelegate
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag {
+  NTRRoundedRectView *roundedRectView = [anim valueForKey:VIEW_BEING_ANIMATED];
+
+  if ([[anim valueForKey:IS_ROUNDED_RECT_VIEW_FLIPPING_OUT] boolValue]) {
+    if ([roundedRectView isEqual:self.middleRoundedRectView]) {
+      roundedRectView.hidden = YES;
+    }
+
+    [self fadeSubviews];
+    return;
+  }
+
+  [roundedRectView removeFromSuperview];
+  [self.delegate dismissMoreInfoView:self];
+}
+
+- (void)fadeSubviews {
+  self.secondaryView.alpha = 1;
+  self.primaryView.alpha = 1;
+
+  CGFloat fadeDuration = 0.5;
+  [UIView animateWithDuration:fadeDuration animations:^ {
+    self.closeButton.alpha = 1;
+    for (UIView *subview in self.primaryView.subviews)
+      subview.alpha = 1;
+    for (UIView *subview in self.secondaryView.subviews)
+      subview.alpha = 1;
+  }];
+}
+
+- (void)onCloseButton:(UIButton *)button {
+  [self.delegate prepareToDismissMoreInfoView:self];
+  self.secondaryView.hidden = YES;
+  self.primaryView.hidden = YES;
+//  [self flipInRoundedRectView];
 }
 
 @end

@@ -52,16 +52,11 @@
 - (void)selectRoundedRectToFlipOut:(NTRRoundedRectView *)roundedRectView {
   self.selectedRoundedRectView = roundedRectView;
   BOOL willNTRTableViewScroll = [self.ntrTableView scrollToCellWithRoundedRectView:roundedRectView];
+
   if (willNTRTableViewScroll == NO) {
     self.ntrTableView.alpha = 0;
     [self createAndShowMoreInfoView];
   }
-}
-
-#pragma mark - UITableViewDelegate
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-  return self.sizeOfRoundedRects.width + self.spacingBetweenRoundedRects;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -71,7 +66,13 @@
   [self createAndShowMoreInfoView];
 }
 
-#pragma mark - Animations
+#pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+  return self.sizeOfRoundedRects.width + self.spacingBetweenRoundedRects;
+}
+
+#pragma mark - Animations and graphics
 
 - (void)createAndShowMoreInfoView {
   NTRMoreInfoView *moreInfoView = [[NTRMoreInfoView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(self.frame), CGRectGetHeight(self.frame))];
@@ -90,7 +91,6 @@
 }
 
 - (NSArray *)createFakeRoundedRectViews {
-
   NSMutableArray *fakeRoundedRectViews = [NSMutableArray array];
   
   for (NTRTableViewCell *cell in [self.ntrTableView visibleCells]) {

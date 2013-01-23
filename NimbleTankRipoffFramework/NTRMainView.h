@@ -22,8 +22,8 @@
 
 @interface NTRMainView : UIView <NTRRoundedRectViewDelegate>
 
-@property (nonatomic) CGSize sizeOfRoundedRects;
-@property (nonatomic) CGFloat spacingBetweenRoundedRects;
+@property (nonatomic) CGSize sizeOfRoundedRects;          //used to calculate height of tableViewCells
+@property (nonatomic) CGFloat spacingBetweenRoundedRects; //used to calculate height of tableViewCells
 @property (nonatomic, strong) id<NTRMainViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame andTableViewDataSource:(id<UITableViewDataSource>)dataSource;

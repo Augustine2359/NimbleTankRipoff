@@ -24,6 +24,7 @@
   if (self) {
     self.backgroundColor = [UIColor orangeColor];
     self.layer.cornerRadius = 10;
+    self.clipsToBounds = YES;
     
 //    CGRect backgroundViewFrame = frame;
 //    backgroundViewFrame.origin = CGPointZero;
@@ -66,58 +67,58 @@
   }
 }
 
-- (void)flipOutToView:(UIView *)view {
-//  self.transformLayer.bounds = self.layer.bounds;
-  CGFloat animationDuration = 2;
-
-//  for (CALayer *transformLayerSublayer in self.transformLayer.sublayers) {
-//    CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-//    resizeAnimation.fromValue = [NSValue valueWithCGRect:transformLayerSublayer.bounds];
-//    CGRect newBounds = view.layer.bounds;
-////    resizeAnimation.duration = animationDuration;
-//    resizeAnimation.toValue = [NSValue valueWithCGRect:newBounds];
+//- (void)flipOutToView:(UIView *)view {
+////  self.transformLayer.bounds = self.layer.bounds;
+//  CGFloat animationDuration = 2;
 //
-//    CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-//    translateAnimation.fromValue = [NSValue valueWithCGPoint:transformLayerSublayer.position];
-//    translateAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(CGRectGetWidth(newBounds)/2, CGRectGetHeight(newBounds)/2)];
-//
-//    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-//    //  animationGroup.animations = [NSArray arrayWithObjects:translateAnimation, flipAnimation, resizeAnimation, cornerRadiusRemovalAnimation, nil];
-//    animationGroup.animations = [NSArray arrayWithObjects:resizeAnimation, nil];
-//    animationGroup.duration = animationDuration;
-//    animationGroup.fillMode = kCAFillModeForwards;
-//    animationGroup.removedOnCompletion = NO;
-////    [transformLayerSublayer addAnimation:animationGroup forKey:@"now"];
-//  }
-  
-  CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-  translateAnimation.fromValue = [NSValue valueWithCGPoint:self.layer.position];
-  translateAnimation.toValue = [NSValue valueWithCGPoint:view.layer.position];
-  translateAnimation.duration = animationDuration;
-  
-  CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
-  resizeAnimation.fromValue = [NSValue valueWithCGRect:self.layer.bounds];
-  CGRect newBounds = view.layer.bounds;
-  resizeAnimation.duration = animationDuration;
-  resizeAnimation.toValue = [NSValue valueWithCGRect:newBounds];
-
-//  CABasicAnimation *cornerRadiusRemovalAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
-//  cornerRadiusRemovalAnimation.fromValue = [NSNumber numberWithFloat:view.layer.cornerRadius];
-//  cornerRadiusRemovalAnimation.toValue = [NSNumber numberWithFloat:0];
+////  for (CALayer *transformLayerSublayer in self.transformLayer.sublayers) {
+////    CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+////    resizeAnimation.fromValue = [NSValue valueWithCGRect:transformLayerSublayer.bounds];
+////    CGRect newBounds = view.layer.bounds;
+//////    resizeAnimation.duration = animationDuration;
+////    resizeAnimation.toValue = [NSValue valueWithCGRect:newBounds];
+////
+////    CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+////    translateAnimation.fromValue = [NSValue valueWithCGPoint:transformLayerSublayer.position];
+////    translateAnimation.toValue = [NSValue valueWithCGPoint:CGPointMake(CGRectGetWidth(newBounds)/2, CGRectGetHeight(newBounds)/2)];
+////
+////    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+////    //  animationGroup.animations = [NSArray arrayWithObjects:translateAnimation, flipAnimation, resizeAnimation, cornerRadiusRemovalAnimation, nil];
+////    animationGroup.animations = [NSArray arrayWithObjects:resizeAnimation, nil];
+////    animationGroup.duration = animationDuration;
+////    animationGroup.fillMode = kCAFillModeForwards;
+////    animationGroup.removedOnCompletion = NO;
+//////    [transformLayerSublayer addAnimation:animationGroup forKey:@"now"];
+////  }
 //  
-  CABasicAnimation *flipAnimation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform"];
-  flipAnimation.fromValue = [NSValue valueWithCATransform3D:self.layer.transform];
-  CATransform3D flipTransform = CATransform3DMakeRotation(M_PI, 1, 0, 0);
-  flipTransform = CATransform3DRotate(flipTransform, M_PI_2, 0, 0, 1);
-  flipAnimation.toValue = [NSValue valueWithCATransform3D:flipTransform];
-
-  CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-  animationGroup.animations = [NSArray arrayWithObjects:translateAnimation, resizeAnimation, flipAnimation, nil];
-  animationGroup.duration = animationDuration;
-  animationGroup.fillMode = kCAFillModeForwards;
-  animationGroup.removedOnCompletion = NO;
-  [self.layer addAnimation:animationGroup forKey:@"now"];
-}
+//  CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+//  translateAnimation.fromValue = [NSValue valueWithCGPoint:self.layer.position];
+//  translateAnimation.toValue = [NSValue valueWithCGPoint:view.layer.position];
+//  translateAnimation.duration = animationDuration;
+//
+//  CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
+//  resizeAnimation.fromValue = [NSValue valueWithCGRect:self.layer.bounds];
+//  CGRect newBounds = view.layer.bounds;
+//  resizeAnimation.duration = animationDuration;
+//  resizeAnimation.toValue = [NSValue valueWithCGRect:newBounds];
+//
+////  CABasicAnimation *cornerRadiusRemovalAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
+////  cornerRadiusRemovalAnimation.fromValue = [NSNumber numberWithFloat:view.layer.cornerRadius];
+////  cornerRadiusRemovalAnimation.toValue = [NSNumber numberWithFloat:0];
+////
+//  CABasicAnimation *flipAnimation = [CABasicAnimation animationWithKeyPath:@"sublayerTransform"];
+//  flipAnimation.fromValue = [NSValue valueWithCATransform3D:self.layer.transform];
+//  CATransform3D flipTransform = CATransform3DMakeRotation(M_PI, 1, 0, 0);
+//  flipTransform = CATransform3DRotate(flipTransform, M_PI_2, 0, 0, 1);
+//  flipAnimation.toValue = [NSValue valueWithCATransform3D:flipTransform];
+//
+//  CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+//  animationGroup.animations = [NSArray arrayWithObjects:translateAnimation, resizeAnimation, flipAnimation, nil];
+//  animationGroup.duration = animationDuration;
+//  animationGroup.fillMode = kCAFillModeForwards;
+//  animationGroup.removedOnCompletion = NO;
+//  [self.layer addAnimation:animationGroup forKey:@"now"];
+//}
 
 - (void)hideWordButton:(BOOL)hidden {
   self.wordButton.hidden = hidden;

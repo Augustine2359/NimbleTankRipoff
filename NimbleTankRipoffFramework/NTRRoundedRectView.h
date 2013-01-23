@@ -14,7 +14,6 @@
 
 @protocol NTRRoundedRectViewDelegate <NSObject>
 
-@optional
 - (void)selectRoundedRectToFlipOut:(NTRRoundedRectView *)roundedRectView;
 
 @end
@@ -26,6 +25,6 @@
 - (NSString *)word;
 - (void)setWord:(NSString *)zawaado;
 - (void)hideWordButton:(BOOL)hidden;
-- (void)flipOutToView:(UIView *)view;
+//- (void)flipOutToView:(UIView *)view;
 
 @end
