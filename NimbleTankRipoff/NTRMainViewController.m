@@ -40,8 +40,8 @@
   self.ntrMainView.delegate = self;
   [self.view addSubview:self.ntrMainView];
 
-  self.ntrMainView.sizeOfRoundedRects = CGSizeMake(50, 200);
-  self.ntrMainView.spacingBetweenRoundedRects = 50;
+  self.ntrMainView.sizeOfRoundedRects = CGSizeMake(100, 200);
+  self.ntrMainView.spacingBetweenRoundedRects = 10;
 }
 
 #pragma mark - UITableViewDataSource

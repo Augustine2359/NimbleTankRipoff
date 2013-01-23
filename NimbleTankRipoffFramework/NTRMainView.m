@@ -120,15 +120,4 @@
 
 }
 
-//- (void)slideOutExtraRoundedRectViews:(NSArray *)roundedRectViews {
-//}
-//
-//- (void)flipOutRoundedRectView:(NTRRoundedRectView *)roundedRectView {
-//  CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-//  translateAnimation.fromValue = [NSValue valueWithCGPoint:roundedRectView.layer.position];
-//  translateAnimation.toValue = [NSValue valueWithCGPoint:CGPointZero];
-//  translateAnimation.duration = 5;
-//  [roundedRectView.layer addAnimation:translateAnimation forKey:@"now"];
-//}
-
 @end

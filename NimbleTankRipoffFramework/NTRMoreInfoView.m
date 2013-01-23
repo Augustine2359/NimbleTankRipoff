@@ -14,6 +14,8 @@
 #define ROUNDED_RECT_VIEW_FLIP_OUT @"roundedRectFlipOut"
 #define ROUNDED_RECT_VIEW_FLIP_IN @"roundedRectFlipIn"
 
+#define FADE_DURATION 0.5
+
 @interface NTRMoreInfoView()
 
 @property (nonatomic, strong) UIView *primaryView;
@@ -43,13 +45,6 @@
       self.primaryView.alpha = 0;
       [self addSubview:self.primaryView];
       [self reframeSubviews];
-
-      self.closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
-      [self.closeButton setTitle:@"Close" forState:UIControlStateNormal];
-      self.closeButton.frame = CGRectMake(0, 0, 100, 100);
-      self.closeButton.alpha = 0;
-      [self.closeButton addTarget:self action:@selector(onCloseButton:) forControlEvents:UIControlEventTouchUpInside];
-      [self.primaryView addSubview:self.closeButton];
     }
     return self;
 }
@@ -80,6 +75,35 @@
     [self.primaryView addSubview:[settings objectForKey:PRIMARY_VIEW]];
     [self.primaryView addSubview:self.closeButton];
   }
+
+  BOOL containsCloseButton = ([settings objectForKey:CLOSE_BUTTON] != nil) && ([[settings objectForKey:CLOSE_BUTTON] isKindOfClass:[UIButton class]]);
+  [self.closeButton removeFromSuperview];
+  if (containsCloseButton) {
+    self.closeButton = [settings objectForKey:CLOSE_BUTTON];
+    [self.closeButton addTarget:self action:nil forControlEvents:UIControlEventAllEvents];
+    [self.primaryView addSubview:self.closeButton];
+  }
+  //create a default close button if none was provided
+  else {
+    self.closeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.closeButton setTitle:@"Close" forState:UIControlStateNormal];
+    CGRect closeButtonRect = CGRectZero;
+    BOOL isSelfVerticallyOriented = (self.primaryViewOnWhichSide == PrimaryViewOnBottom) || (self.primaryViewOnWhichSide == PrimaryViewOnTop);
+    if (isSelfVerticallyOriented) {
+      closeButtonRect.size = CGSizeMake(100, CGRectGetHeight(self.primaryView.bounds));
+      self.closeButton.autoresizingMask = UIViewAutoresizingFlexibleHeight;
+    }
+    else {
+      closeButtonRect.size = CGSizeMake(CGRectGetWidth(self.primaryView.bounds), 100);
+      self.closeButton.autoresizingMask = UIViewAutoresizingFlexibleWidth;
+    }
+    self.closeButton.frame = closeButtonRect;
+
+    self.closeButton.alpha = 0;
+    [self.closeButton addTarget:self action:@selector(onCloseButton:) forControlEvents:UIControlEventTouchUpInside];
+    [self.primaryView addSubview:self.closeButton];
+  }
+  [self.closeButton addTarget:self action:@selector(onCloseButton:) forControlEvents:UIControlEventTouchUpInside];
 
   BOOL containsSecondaryView = ([settings objectForKey:SECONDARY_VIEW] != nil) && ([[settings objectForKey:SECONDARY_VIEW] isKindOfClass:[UIView class]]);
   if (containsSecondaryView ) {
@@ -160,8 +184,6 @@
 }
 
 - (void)flipOutRoundedRectView:(NTRRoundedRectView *)roundedRectView {
-//  [roundedRectView flipOutToView:self.primaryView];
-  
   self.primaryView.backgroundColor = roundedRectView.backgroundColor;
   
   CGFloat animationDuration = 2;
@@ -233,10 +255,7 @@
     [UIView animateWithDuration:1 delay:0 options:UIViewAnimationCurveEaseIn animations:^ {
       roundedRectView.alpha = 1;
       roundedRectView.frame = targetRect;
-    } completion:^(BOOL finished) {
-      if (finished)
-        ;//        [roundedRectView removeFromSuperview];
-    }];
+    } completion:nil];
   }
   
   [self flipInRoundedRectView:newMiddleRoundedRectView];
@@ -303,11 +322,10 @@
 }
 
 - (void)fadeSubviews {
-  self.secondaryView.alpha = 1;
   self.primaryView.alpha = 1;
 
-  CGFloat fadeDuration = 0.5;
-  [UIView animateWithDuration:fadeDuration animations:^ {
+  [UIView animateWithDuration:FADE_DURATION animations:^ {
+    self.secondaryView.alpha = 1;
     self.closeButton.alpha = 1;
     for (UIView *subview in self.primaryView.subviews)
       subview.alpha = 1;
@@ -317,10 +335,15 @@
 }
 
 - (void)onCloseButton:(UIButton *)button {
-  [self.delegate prepareToDismissMoreInfoView:self];
-  self.secondaryView.hidden = YES;
-  self.primaryView.hidden = YES;
-//  [self flipInRoundedRectView];
+  [UIView animateWithDuration:FADE_DURATION animations:^ {
+    self.closeButton.alpha = 0;
+    self.secondaryView.alpha = 0;
+  } completion:^ (BOOL finished){
+    if (finished) {
+      self.primaryView.alpha = 0;
+      [self.delegate prepareToDismissMoreInfoView:self];
+    }
+  }];
 }
 
 @end

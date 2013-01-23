@@ -14,6 +14,7 @@
 #define IS_VERTICALLY_ORIENTED @"isVerticallyOriented"
 #define PRIMARY_VIEW @"primaryView"
 #define SECONDARY_VIEW @"secondaryView"
+#define CLOSE_BUTTON @"closeButton"
 
 @class NTRMoreInfoView;
 
