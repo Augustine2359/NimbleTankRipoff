@@ -12,7 +12,6 @@
 @interface NTRRoundedRectView()
 
 @property (nonatomic, strong) UIView *backgroundView;
-@property (nonatomic, strong) UIButton *wordButton;
 @property (nonatomic, strong) CATransformLayer *transformLayer;
 
 @end
@@ -35,12 +34,12 @@
 //    self.backgroundView.layer.position = CGPointMake(CGRectGetWidth(frame)/2, CGRectGetHeight(frame)/2);
 //    [self addSubview:self.backgroundView];
 
-    self.wordButton = [UIButton buttonWithType:UIButtonTypeCustom];
-    self.wordButton.frame = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
-    self.wordButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
-    self.wordButton.backgroundColor = [UIColor clearColor];
-    [self.wordButton addTarget:self action:@selector(onWordButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:self.wordButton];
+    self.moreInfoButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    self.moreInfoButton.frame = CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame));
+    self.moreInfoButton.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.moreInfoButton.backgroundColor = [UIColor clearColor];
+    [self.moreInfoButton addTarget:self action:@selector(onMoreInfoButtonPressed:) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:self.moreInfoButton];
 
 //    self.transformLayer = [CATransformLayer layer];
 //    self.transformLayer.position = CGPointMake(CGRectGetWidth(frame)/2, CGRectGetHeight(frame)/2);
@@ -54,14 +53,14 @@
 }
 
 - (NSString *)word {
-  return [self.wordButton titleForState:UIControlStateNormal];
+  return [self.moreInfoButton titleForState:UIControlStateNormal];
 }
 
 - (void)setWord:(NSString *)zawaado {
-  [self.wordButton setTitle:zawaado forState:UIControlStateNormal];
+  [self.moreInfoButton setTitle:zawaado forState:UIControlStateNormal];
 }
 
-- (void)onWordButtonPressed:(UIButton *)button {
+- (void)onMoreInfoButtonPressed:(UIButton *)button {
   if ([self.delegate respondsToSelector:@selector(selectRoundedRectToFlipOut:)]) {
     [self.delegate selectRoundedRectToFlipOut:self];
   }
@@ -120,8 +119,15 @@
 //  [self.layer addAnimation:animationGroup forKey:@"now"];
 //}
 
-- (void)hideWordButton:(BOOL)hidden {
-  self.wordButton.hidden = hidden;
+- (void)hideMoreInfoButton:(BOOL)hidden {
+//  self.moreInfoButton.autoresizingMask = UIViewAutoresizingNone;
+  DLog(@"%@", self.moreInfoButton);
+  DLog(@"%@", NSStringFromCGRect(self.moreInfoButton.frame));
+  self.moreInfoButton.hidden = hidden;
+}
+
+- (void)fadeMoreInfoButton:(CGFloat)alpha {
+  self.moreInfoButton.alpha = alpha;
 }
 
 //- (void)hideWordButtonInTime:(CGFloat)time {

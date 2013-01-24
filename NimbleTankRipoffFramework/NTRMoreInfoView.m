@@ -14,8 +14,6 @@
 #define ROUNDED_RECT_VIEW_FLIP_OUT @"roundedRectFlipOut"
 #define ROUNDED_RECT_VIEW_FLIP_IN @"roundedRectFlipIn"
 
-#define FADE_DURATION 0.5
-
 @interface NTRMoreInfoView()
 
 @property (nonatomic, strong) UIView *primaryView;
@@ -171,7 +169,7 @@
       targetRect = CGRectOffset(roundedRectView.frame, -CGRectGetWidth(self.frame), 0);
     else
       targetRect = CGRectOffset(roundedRectView.frame, CGRectGetWidth(self.frame), 0);
-    [UIView animateWithDuration:5 delay:0 options:UIViewAnimationCurveEaseOut animations:^ {
+    [UIView animateWithDuration:SLIDE_DURATION delay:0 options:UIViewAnimationCurveEaseOut animations:^ {
       roundedRectView.alpha = 0;
       roundedRectView.frame = targetRect;
     } completion:^(BOOL finished) {
@@ -179,15 +177,18 @@
         [roundedRectView removeFromSuperview];
     }];
   }
-  
-  [self flipOutRoundedRectView:self.middleRoundedRectView];
+
+  [UIView animateWithDuration:FADE_DURATION animations:^ {
+    [self.middleRoundedRectView fadeMoreInfoButton:0];
+  } completion:^ (BOOL finished) {
+    if (finished)
+      [self flipOutRoundedRectView:self.middleRoundedRectView];
+  }];
 }
 
 - (void)flipOutRoundedRectView:(NTRRoundedRectView *)roundedRectView {
-  self.primaryView.backgroundColor = roundedRectView.backgroundColor;
+  self.primaryView.backgroundColor = self.middleRoundedRectView.backgroundColor;
   
-  CGFloat animationDuration = 2;
-
   CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
   translateAnimation.fromValue = [NSValue valueWithCGPoint:roundedRectView.layer.position];
   translateAnimation.toValue = [NSValue valueWithCGPoint:self.primaryView.layer.position];
@@ -216,26 +217,21 @@
   
   CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
   animationGroup.animations = [NSArray arrayWithObjects:translateAnimation, flipAnimation, resizeAnimation, cornerRadiusRemovalAnimation, nil];
-  animationGroup.duration = animationDuration;
+  animationGroup.duration = FLIP_DURATION;
   animationGroup.fillMode = kCAFillModeForwards;
   animationGroup.removedOnCompletion = NO;
   animationGroup.delegate = self;
   [animationGroup setValue:roundedRectView forKey:VIEW_BEING_ANIMATED];
   [animationGroup setValue:[NSNumber numberWithInt:YES] forKey:IS_ROUNDED_RECT_VIEW_FLIPPING_OUT];
   [roundedRectView.layer addAnimation:animationGroup forKey:ROUNDED_RECT_VIEW_FLIP_OUT];
-  
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, animationDuration/2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-    [roundedRectView hideWordButton:YES];
-  });
 }
 
 #pragma mark - Sliding in animation
 
 - (void)slideInExtraRoundedRectViews {
   CGRect targetRect;
-
   NTRRoundedRectView *newMiddleRoundedRectView;
-  
+
   for (NTRRoundedRectView *roundedRectView in self.subviews) {
     if ([roundedRectView isKindOfClass:[NTRRoundedRectView class]] == NO)
       continue;
@@ -252,25 +248,23 @@
       roundedRectView.frame = CGRectOffset(roundedRectView.frame, -CGRectGetWidth(self.frame), 0);
     else
       roundedRectView.frame = CGRectOffset(roundedRectView.frame, CGRectGetWidth(self.frame), 0);
-    [UIView animateWithDuration:1 delay:0 options:UIViewAnimationCurveEaseIn animations:^ {
+    [UIView animateWithDuration:SLIDE_DURATION delay:0 options:UIViewAnimationCurveEaseIn animations:^ {
       roundedRectView.alpha = 1;
       roundedRectView.frame = targetRect;
     } completion:nil];
   }
-  
+
   [self flipInRoundedRectView:newMiddleRoundedRectView];
 }
 
 - (void)flipInRoundedRectView:(NTRRoundedRectView *)newMiddleRoundedRectView {
   newMiddleRoundedRectView.hidden = YES;
   self.middleRoundedRectView.hidden = NO;
-  
-  CGFloat animationDuration = 2;
-  
+
   CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
   translateAnimation.fromValue = [NSValue valueWithCGPoint:self.middleRoundedRectView.layer.position];
   translateAnimation.toValue = [NSValue valueWithCGPoint:newMiddleRoundedRectView.layer.position];
-  
+
   CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];
   CGRect oldBounds = self.primaryView.layer.bounds;
   CGFloat oldWidth = CGRectGetWidth(oldBounds);
@@ -279,28 +273,24 @@
   resizeAnimation.fromValue = [NSValue valueWithCGRect:oldBounds];
   CGRect newBounds = newMiddleRoundedRectView.layer.bounds;
   resizeAnimation.toValue = [NSValue valueWithCGRect:newBounds];
-  
+
   CABasicAnimation *cornerRadiusRemovalAnimation = [CABasicAnimation animationWithKeyPath:@"cornerRadius"];
   cornerRadiusRemovalAnimation.fromValue = [NSNumber numberWithFloat:self.middleRoundedRectView.layer.cornerRadius];
   cornerRadiusRemovalAnimation.toValue = [NSNumber numberWithFloat:10];
-  
+
   CABasicAnimation *flipAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
   flipAnimation.fromValue = [NSValue valueWithCATransform3D:self.middleRoundedRectView.layer.transform];
   flipAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
-  
+
   CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
   animationGroup.animations = [NSArray arrayWithObjects:translateAnimation, resizeAnimation, flipAnimation, cornerRadiusRemovalAnimation, nil];
-  animationGroup.duration = animationDuration;
+  animationGroup.duration = FLIP_DURATION;
   animationGroup.fillMode = kCAFillModeForwards;
   animationGroup.removedOnCompletion = NO;
   animationGroup.delegate = self;
   [animationGroup setValue:self.middleRoundedRectView forKey:VIEW_BEING_ANIMATED];
   [animationGroup setValue:[NSNumber numberWithInt:NO] forKey:IS_ROUNDED_RECT_VIEW_FLIPPING_OUT];
   [self.middleRoundedRectView.layer addAnimation:animationGroup forKey:ROUNDED_RECT_VIEW_FLIP_IN];
-  
-  dispatch_after(dispatch_time(DISPATCH_TIME_NOW, animationDuration/2 * NSEC_PER_SEC), dispatch_get_main_queue(), ^{
-    [self.middleRoundedRectView hideWordButton:NO];
-  });
 }
 
 #pragma mark - CAAnimationDelegate
@@ -317,7 +307,6 @@
     return;
   }
 
-  [roundedRectView removeFromSuperview];
   [self.delegate dismissMoreInfoView:self];
 }
 

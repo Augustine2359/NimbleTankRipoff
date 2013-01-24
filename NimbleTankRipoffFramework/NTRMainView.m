@@ -100,7 +100,6 @@
     [fakeRoundedRectViews addObject:fakeRoundedRectView];
     fakeRoundedRectView.word = [cell word];
   }
-  
   return fakeRoundedRectViews;
 }
 
@@ -114,10 +113,14 @@
 }
 
 - (void)dismissMoreInfoView:(NTRMoreInfoView *)moreInfoView {
-  [moreInfoView removeFromSuperview];
   [self.ntrTableView reloadData];
   self.ntrTableView.alpha = 1;
-
+  [UIView animateWithDuration:FADE_DURATION animations:^ {
+    moreInfoView.alpha = 0;
+  } completion:^(BOOL finished) {
+    if (finished)
+      [moreInfoView removeFromSuperview];
+  }];
 }
 
 @end

@@ -21,10 +21,12 @@
 @interface NTRRoundedRectView : UIView
 
 @property (nonatomic, strong) id <NTRRoundedRectViewDelegate> delegate;
+@property (nonatomic, strong) UIButton *moreInfoButton;
 
 - (NSString *)word;
 - (void)setWord:(NSString *)zawaado;
-- (void)hideWordButton:(BOOL)hidden;
+- (void)hideMoreInfoButton:(BOOL)hidden;
+- (void)fadeMoreInfoButton:(CGFloat)alpha;
 //- (void)flipOutToView:(UIView *)view;
 
 @end
