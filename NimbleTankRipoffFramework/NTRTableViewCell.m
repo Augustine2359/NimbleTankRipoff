@@ -24,12 +24,19 @@
                                                                                   offset,
                                                                                   CGRectGetHeight(self.contentView.frame) - 2*offset,
                                                                                   CGRectGetWidth(self.contentView.frame) - 2*offset)];
-      self.roundedRectView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      self.roundedRectView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleRightMargin;
       self.roundedRectView.delegate = flipOutSuperview;
       [self.contentView addSubview:self.roundedRectView];
     }
 
     return self;
+}
+
+- (void)layoutSubviews {
+  [super layoutSubviews];
+  CGRect frame = self.frame;
+  frame.size.width = CGRectGetHeight(self.superview.frame);
+  self.frame = frame;
 }
 
 - (NSString *)word {

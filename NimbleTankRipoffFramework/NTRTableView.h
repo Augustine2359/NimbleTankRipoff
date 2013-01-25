@@ -12,7 +12,7 @@
 
 @interface NTRTableView : UITableView
 
-- (BOOL)scrollToCellWithRoundedRectView:(NTRRoundedRectView *)roundedRectView;
+- (BOOL)scrollToCellWithRoundedRectView:(NTRRoundedRectView *)roundedRectView animated:(BOOL)animated;
 - (NSIndexPath *)indexPathOfCellWithRoundedRectView:(NTRRoundedRectView *)roundedRectView;
 
 @end

@@ -33,6 +33,7 @@
     if (self) {
       self.primaryViewRatio = 0.5;
       self.primaryViewOnWhichSide = PrimaryViewOnBottom;
+      self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
       self.secondaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
       self.secondaryView.backgroundColor = [UIColor whiteColor];
@@ -132,20 +133,25 @@
   }
 
   switch (self.primaryViewOnWhichSide) {
-    case PrimaryViewOnBottom:
-      primaryViewFrame.origin.y = CGRectGetMaxY(secondaryViewFrame);
-      break;
     case PrimaryViewOnTop:
       secondaryViewFrame.origin.y = CGRectGetMaxY(primaryViewFrame);
+      self.primaryView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      self.secondaryView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
       break;
     case PrimaryViewOnLeft:
       secondaryViewFrame.origin.x = CGRectGetMaxX(primaryViewFrame);
+      self.primaryView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
+      self.secondaryView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleLeftMargin;
       break;
     case PrimaryViewOnRight:
       primaryViewFrame.origin.x = CGRectGetMaxX(secondaryViewFrame);
+      self.primaryView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleWidth;
+      self.secondaryView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleWidth;
       break;
     default: //default is bottom
       primaryViewFrame.origin.y = CGRectGetMaxY(secondaryViewFrame);
+      self.primaryView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+      self.secondaryView.autoresizingMask = UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
       break;
   }
 
@@ -262,7 +268,7 @@
   self.middleRoundedRectView.hidden = NO;
 
   CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
-  translateAnimation.fromValue = [NSValue valueWithCGPoint:self.middleRoundedRectView.layer.position];
+  translateAnimation.fromValue = [NSValue valueWithCGPoint:self.primaryView.layer.position];
   translateAnimation.toValue = [NSValue valueWithCGPoint:newMiddleRoundedRectView.layer.position];
 
   CABasicAnimation *resizeAnimation = [CABasicAnimation animationWithKeyPath:@"bounds"];

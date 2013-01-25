@@ -22,13 +22,14 @@
 - (id)initWithFrame:(CGRect)frame {
   self = [super initWithFrame:frame];
   if (self) {
+    self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+    self.sizeOfRoundedRects = CGSizeMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.bounds));
+    self.spacingBetweenRoundedRects = 20;
+
     self.ntrTableView = [[NTRTableView alloc] initWithFrame:CGRectZero style:UITableViewStylePlain];
     self.ntrTableView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
     self.ntrTableView.delegate = self;
     [self addSubview:self.ntrTableView];
-
-    self.sizeOfRoundedRects = CGSizeMake(CGRectGetWidth(self.bounds)/2, CGRectGetHeight(self.bounds));
-    self.spacingBetweenRoundedRects = 20;
   }
   return self;
 }
@@ -51,7 +52,7 @@
 
 - (void)selectRoundedRectToFlipOut:(NTRRoundedRectView *)roundedRectView {
   self.selectedRoundedRectView = roundedRectView;
-  BOOL willNTRTableViewScroll = [self.ntrTableView scrollToCellWithRoundedRectView:roundedRectView];
+  BOOL willNTRTableViewScroll = [self.ntrTableView scrollToCellWithRoundedRectView:roundedRectView animated:YES];
 
   if (willNTRTableViewScroll == NO) {
     self.ntrTableView.alpha = 0;
@@ -104,6 +105,7 @@
 }
 
 - (void)prepareToDismissMoreInfoView:(NTRMoreInfoView *)moreInfoView {
+  [self.ntrTableView scrollToCellWithRoundedRectView:self.selectedRoundedRectView animated:NO];
   NSArray *fakeRoundedRectViews = [self createFakeRoundedRectViews];
   for (NTRRoundedRectView *roundedRectView in fakeRoundedRectViews) {
     [moreInfoView addSubview:roundedRectView];

@@ -16,15 +16,16 @@
 {
     self = [super initWithFrame:frame style:style];
     if (self) {
-      self.layer.transform = CATransform3DMakeRotation(-M_PI_2, 0, 0, 1);
-      self.separatorStyle = UITableViewCellSeparatorStyleNone;
+      self.transform = CGAffineTransformMakeRotation(-M_PI_2);
+      self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
       self.showsHorizontalScrollIndicator = NO;
       self.showsVerticalScrollIndicator = NO;
+      self.separatorStyle = UITableViewCellSeparatorStyleNone;
     }
     return self;
 }
 
-- (BOOL)scrollToCellWithRoundedRectView:(NTRRoundedRectView *)roundedRectView {
+- (BOOL)scrollToCellWithRoundedRectView:(NTRRoundedRectView *)roundedRectView animated:(BOOL)animated {
   NSIndexPath *indexPathToScrollTo;
   for (NTRTableViewCell *cell in [self visibleCells]) {
     if ([cell containsRoundedRectView:roundedRectView]) {
@@ -35,7 +36,7 @@
       if (CGPointEqualToPoint(contentOffset, self.contentOffset)) {
         return NO;
       }
-      [self setContentOffset:contentOffset animated:YES];
+      [self setContentOffset:contentOffset animated:animated];
       return YES;
     }
   }
