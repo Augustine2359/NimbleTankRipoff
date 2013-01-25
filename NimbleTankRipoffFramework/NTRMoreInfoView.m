@@ -35,14 +35,15 @@
       self.primaryViewOnWhichSide = PrimaryViewOnBottom;
       self.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 
-      self.secondaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
-      self.secondaryView.backgroundColor = [UIColor whiteColor];
-      self.secondaryView.alpha = 0;
-
-      [self addSubview:self.secondaryView];
       self.primaryView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame)/2, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
       self.primaryView.alpha = 0;
       [self addSubview:self.primaryView];
+
+      self.secondaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
+      self.secondaryView.backgroundColor = [UIColor whiteColor];
+      self.secondaryView.alpha = 0;
+      [self addSubview:self.secondaryView];
+
       [self reframeSubviews];
     }
     return self;
@@ -264,8 +265,8 @@
 }
 
 - (void)flipInRoundedRectView:(NTRRoundedRectView *)newMiddleRoundedRectView {
-  newMiddleRoundedRectView.hidden = YES;
-  self.middleRoundedRectView.hidden = NO;
+  newMiddleRoundedRectView.alpha = 0;
+  self.middleRoundedRectView.alpha = 1;
 
   CABasicAnimation *translateAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
   translateAnimation.fromValue = [NSValue valueWithCGPoint:self.primaryView.layer.position];
@@ -306,7 +307,7 @@
 
   if ([[anim valueForKey:IS_ROUNDED_RECT_VIEW_FLIPPING_OUT] boolValue]) {
     if ([roundedRectView isEqual:self.middleRoundedRectView]) {
-      roundedRectView.hidden = YES;
+      roundedRectView.alpha = 0;
     }
 
     [self fadeSubviews];
@@ -333,9 +334,12 @@
   [UIView animateWithDuration:FADE_DURATION animations:^ {
     self.closeButton.alpha = 0;
     self.secondaryView.alpha = 0;
+    for (UIView *subview in self.primaryView.subviews)
+      subview.alpha = 0;
   } completion:^ (BOOL finished){
     if (finished) {
       self.primaryView.alpha = 0;
+      self.middleRoundedRectView.alpha = 1;
       [self.delegate prepareToDismissMoreInfoView:self];
     }
   }];

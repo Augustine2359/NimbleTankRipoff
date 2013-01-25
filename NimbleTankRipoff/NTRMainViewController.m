@@ -63,7 +63,8 @@
             
   [cell setWord:[self.wordsArray objectAtIndex:indexPath.row]];
   [cell setRoundedRectSize:[self.ntrMainView sizeOfRoundedRects] andSpacing:self.ntrMainView.spacingBetweenRoundedRects];
-  
+  [cell setRoundedRectBackgroundColor:[UIColor orangeColor]];
+
   return cell;
 }
 
@@ -127,12 +128,16 @@
   UIView *secondaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
   secondaryView.backgroundColor = [UIColor blueColor];
 
+  UIView *primaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 300, 300)];
+  primaryView.backgroundColor = [UIColor redColor];
+
   enum PrimaryViewOnWhichSide primaryViewOnWhichSide = indexPath.row%4;
 
   NSDictionary *settings = [NSDictionary dictionaryWithObjectsAndKeys:
                             [NSNumber numberWithFloat:floatAmount], PRIMARY_VIEW_RATIO,
                             [NSNumber numberWithInt:primaryViewOnWhichSide], PRIMARY_VIEW_ON_WHICH_SIDE,
                             secondaryView, SECONDARY_VIEW,
+                            primaryView, PRIMARY_VIEW,
                             nil];
   return settings;
 }

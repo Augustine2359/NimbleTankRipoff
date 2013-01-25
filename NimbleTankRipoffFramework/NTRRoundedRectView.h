@@ -25,7 +25,6 @@
 
 - (NSString *)word;
 - (void)setWord:(NSString *)zawaado;
-- (void)hideMoreInfoButton:(BOOL)hidden;
 - (void)fadeMoreInfoButton:(CGFloat)alpha;
 //- (void)flipOutToView:(UIView *)view;
 

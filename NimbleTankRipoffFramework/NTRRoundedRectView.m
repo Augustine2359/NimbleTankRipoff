@@ -119,13 +119,6 @@
 //  [self.layer addAnimation:animationGroup forKey:@"now"];
 //}
 
-- (void)hideMoreInfoButton:(BOOL)hidden {
-//  self.moreInfoButton.autoresizingMask = UIViewAutoresizingNone;
-  DLog(@"%@", self.moreInfoButton);
-  DLog(@"%@", NSStringFromCGRect(self.moreInfoButton.frame));
-  self.moreInfoButton.hidden = hidden;
-}
-
 - (void)fadeMoreInfoButton:(CGFloat)alpha {
   self.moreInfoButton.alpha = alpha;
 }

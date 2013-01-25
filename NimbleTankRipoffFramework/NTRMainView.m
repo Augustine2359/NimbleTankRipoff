@@ -98,8 +98,9 @@
     CGRect rect = [self convertRect:cell.roundedRectView.bounds fromView:cell.roundedRectView];
     NTRRoundedRectView *fakeRoundedRectView = [[NTRRoundedRectView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     fakeRoundedRectView.frame = rect;
-    [fakeRoundedRectViews addObject:fakeRoundedRectView];
+    fakeRoundedRectView.backgroundColor = cell.roundedRectView.backgroundColor;
     fakeRoundedRectView.word = [cell word];
+    [fakeRoundedRectViews addObject:fakeRoundedRectView];
   }
   return fakeRoundedRectViews;
 }

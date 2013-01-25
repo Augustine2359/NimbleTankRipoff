@@ -59,4 +59,8 @@
   self.roundedRectView.autoresizingMask = UIViewAutoresizingFlexibleTopMargin | UIViewAutoresizingFlexibleBottomMargin;
 }
 
+- (void)setRoundedRectBackgroundColor:(UIColor *)backgroundColor {
+  self.roundedRectView.backgroundColor = backgroundColor;
+}
+
 @end
