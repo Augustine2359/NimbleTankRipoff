@@ -214,13 +214,25 @@
   cornerRadiusRemovalAnimation.fromValue = [NSNumber numberWithFloat:roundedRectView.layer.cornerRadius];
   cornerRadiusRemovalAnimation.toValue = [NSNumber numberWithFloat:0];
   roundedRectView.layer.cornerRadius = 0;
+
+  CAKeyframeAnimation *flipAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+  flipAnimation.keyTimes = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0], [NSNumber numberWithFloat:0.5], [NSNumber numberWithFloat:1], nil];
+  NSMutableArray *flipValues = [NSMutableArray array];
+  CATransform3D flipValue = roundedRectView.layer.transform;
+  [flipValues addObject:[NSValue valueWithCATransform3D:flipValue]];
+
+  flipValue = CATransform3DRotate(flipValue, M_PI_2, 1, 0, 0);
+  flipValue = CATransform3DRotate(flipValue, M_PI_4, 0, 0, 1);
+  flipValue = CATransform3DScale(flipValue, 0.5, 0.5, 1);
+  [flipValues addObject:[NSValue valueWithCATransform3D:flipValue]];
   
-  CABasicAnimation *flipAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
-  flipAnimation.fromValue = [NSValue valueWithCATransform3D:roundedRectView.layer.transform];
-  CATransform3D flipTransform = CATransform3DMakeRotation(M_PI, 1, 0, 0);
-  flipTransform = CATransform3DRotate(flipTransform, M_PI_2, 0, 0, 1);
-  flipAnimation.toValue = [NSValue valueWithCATransform3D:flipTransform];
-  roundedRectView.layer.transform = flipTransform;
+  flipValue = roundedRectView.layer.transform;
+  flipValue = CATransform3DRotate(flipValue, M_PI, 1, 0, 0);
+  flipValue = CATransform3DRotate(flipValue, M_PI_2, 0, 0, 1);
+  [flipValues addObject:[NSValue valueWithCATransform3D:flipValue]];
+
+  roundedRectView.layer.transform = flipValue;
+  flipAnimation.values = flipValues;
   
   CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
   animationGroup.animations = [NSArray arrayWithObjects:translateAnimation, flipAnimation, resizeAnimation, cornerRadiusRemovalAnimation, nil];
@@ -285,9 +297,22 @@
   cornerRadiusRemovalAnimation.fromValue = [NSNumber numberWithFloat:self.middleRoundedRectView.layer.cornerRadius];
   cornerRadiusRemovalAnimation.toValue = [NSNumber numberWithFloat:10];
 
-  CABasicAnimation *flipAnimation = [CABasicAnimation animationWithKeyPath:@"transform"];
-  flipAnimation.fromValue = [NSValue valueWithCATransform3D:self.middleRoundedRectView.layer.transform];
-  flipAnimation.toValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+  CAKeyframeAnimation *flipAnimation = [CAKeyframeAnimation animationWithKeyPath:@"transform"];
+  flipAnimation.keyTimes = [NSArray arrayWithObjects:[NSNumber numberWithFloat:0], [NSNumber numberWithFloat:0.5], [NSNumber numberWithFloat:1], nil];
+  NSMutableArray *flipValues = [NSMutableArray array];
+  CATransform3D flipValue = self.middleRoundedRectView.layer.transform;
+  [flipValues addObject:[NSValue valueWithCATransform3D:flipValue]];
+
+  flipValue = CATransform3DRotate(flipValue, M_PI_2, 1, 0, 0);
+  flipValue = CATransform3DRotate(flipValue, M_PI_4, 0, 0, 1);
+  flipValue = CATransform3DScale(flipValue, 0.5, 0.5, 1);
+  [flipValues addObject:[NSValue valueWithCATransform3D:flipValue]];
+
+  flipValue = CATransform3DIdentity;
+  [flipValues addObject:[NSValue valueWithCATransform3D:flipValue]];
+
+  self.middleRoundedRectView.layer.transform = flipValue;
+  flipAnimation.values = flipValues;
 
   CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
   animationGroup.animations = [NSArray arrayWithObjects:translateAnimation, resizeAnimation, flipAnimation, cornerRadiusRemovalAnimation, nil];
