@@ -60,10 +60,16 @@
   NTRTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:NTR_CELL_IDENTIFIER];
   if (cell == nil)
     cell = [[NTRTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:NTR_CELL_IDENTIFIER flipOutSuperview:self.ntrMainView];
-            
-  [cell setWord:[self.wordsArray objectAtIndex:indexPath.row]];
+
   [cell setRoundedRectSize:[self.ntrMainView sizeOfRoundedRects] andSpacing:self.ntrMainView.spacingBetweenRoundedRects];
   [cell setRoundedRectBackgroundColor:[UIColor orangeColor]];
+
+  UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, [self.ntrMainView sizeOfRoundedRects].width, [self.ntrMainView sizeOfRoundedRects].height)];
+  label.text = [self.wordsArray objectAtIndex:indexPath.row];
+  label.textAlignment = NSTextAlignmentCenter;
+  label.textColor = [UIColor whiteColor];
+  label.backgroundColor = [UIColor clearColor];
+  [cell setButtonSubview:label];
 
   return cell;
 }

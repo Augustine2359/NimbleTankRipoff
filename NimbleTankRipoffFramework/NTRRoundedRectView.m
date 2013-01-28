@@ -52,12 +52,14 @@
   return self;
 }
 
-- (NSString *)word {
-  return [self.moreInfoButton titleForState:UIControlStateNormal];
+- (UIView *)buttonSubview {
+  return [self.moreInfoButton.subviews lastObject];
 }
 
-- (void)setWord:(NSString *)zawaado {
-  [self.moreInfoButton setTitle:zawaado forState:UIControlStateNormal];
+- (void)setButtonSubview:(UIView *)subview {
+  for (UIView *view in self.moreInfoButton.subviews)
+    [view removeFromSuperview];
+  [self.moreInfoButton addSubview:subview];
 }
 
 - (void)onMoreInfoButtonPressed:(UIButton *)button {

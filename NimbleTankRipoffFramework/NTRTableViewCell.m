@@ -43,8 +43,12 @@
   return [self.roundedRectView word];
 }
 
-- (void)setWord:(NSString *)zawaado {
-  [self.roundedRectView setWord:zawaado];
+- (UIView *)buttonSubview {
+  return [self.roundedRectView buttonSubview];
+}
+
+- (void)setButtonSubview:(UIView *)subview {
+  [self.roundedRectView setButtonSubview:subview];
 }
 
 - (BOOL)containsRoundedRectView:(NTRRoundedRectView *)aRoundedRectView {

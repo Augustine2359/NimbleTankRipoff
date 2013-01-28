@@ -24,7 +24,8 @@
 @property (nonatomic, strong) UIButton *moreInfoButton;
 
 - (NSString *)word;
-- (void)setWord:(NSString *)zawaado;
+- (UIView *)buttonSubview;
+- (void)setButtonSubview:(UIView *)subview;
 - (void)fadeMoreInfoButton:(CGFloat)alpha;
 //- (void)flipOutToView:(UIView *)view;
 

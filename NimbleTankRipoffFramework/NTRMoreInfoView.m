@@ -37,11 +37,13 @@
 
       self.primaryView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(frame)/2, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
       self.primaryView.alpha = 0;
+      self.primaryView.clipsToBounds = YES;
       [self addSubview:self.primaryView];
 
       self.secondaryView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, CGRectGetWidth(frame), CGRectGetHeight(frame)/2)];
       self.secondaryView.backgroundColor = [UIColor whiteColor];
       self.secondaryView.alpha = 0;
+      self.secondaryView.clipsToBounds = YES;
       [self addSubview:self.secondaryView];
 
       [self reframeSubviews];

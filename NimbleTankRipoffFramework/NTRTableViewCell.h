@@ -14,8 +14,8 @@
 @property (nonatomic, strong) NTRRoundedRectView *roundedRectView;
 
 - (id)initWithStyle:(UITableViewCellStyle)style reuseIdentifier:(NSString *)reuseIdentifier flipOutSuperview:(id <NTRRoundedRectViewDelegate>)flipOutSuperview;
-- (NSString *)word;
-- (void)setWord:(NSString *)zawaado;
+- (UIView *)buttonSubview;
+- (void)setButtonSubview:(UIView *)subview;
 - (BOOL)containsRoundedRectView:(NTRRoundedRectView *)aRoundedRectView;
 - (void)setRoundedRectSize:(CGSize)size andSpacing:(CGFloat)spacing;
 - (void)setRoundedRectBackgroundColor:(UIColor *)backgroundColor;

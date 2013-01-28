@@ -93,15 +93,22 @@
 
 - (NSArray *)createFakeRoundedRectViews {
   NSMutableArray *fakeRoundedRectViews = [NSMutableArray array];
-  
+
   for (NTRTableViewCell *cell in [self.ntrTableView visibleCells]) {
     CGRect rect = [self convertRect:cell.roundedRectView.bounds fromView:cell.roundedRectView];
     NTRRoundedRectView *fakeRoundedRectView = [[NTRRoundedRectView alloc] initWithFrame:CGRectMake(0, 0, 100, 100)];
     fakeRoundedRectView.frame = rect;
     fakeRoundedRectView.backgroundColor = cell.roundedRectView.backgroundColor;
-    fakeRoundedRectView.word = [cell word];
+
+    //steals the subview from the cell and put it in the fakeRoundedRect
+    UIView *subview = [cell buttonSubview];
+    [subview removeFromSuperview];
+    [fakeRoundedRectView setButtonSubview:subview];
     [fakeRoundedRectViews addObject:fakeRoundedRectView];
   }
+
+  //puts the subviews back
+  [self.ntrTableView reloadData];
   return fakeRoundedRectViews;
 }
 
