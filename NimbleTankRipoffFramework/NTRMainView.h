@@ -15,7 +15,6 @@
 
 @protocol NTRMainViewDelegate <NSObject>
 
-- (NSString *)wordForIndexPath:(NSIndexPath *)indexPath;
 - (NSDictionary *)settingsForMoreInfoViewForIndexPath:(NSIndexPath *)indexPath;
 
 @end
@@ -28,5 +27,6 @@
 
 - (id)initWithFrame:(CGRect)frame andTableViewDataSource:(id<UITableViewDataSource>)dataSource;
 - (void)setNTRTableViewDataSource:(id<UITableViewDataSource>)dataSource;
+- (void)startingAnimation;
 
 @end

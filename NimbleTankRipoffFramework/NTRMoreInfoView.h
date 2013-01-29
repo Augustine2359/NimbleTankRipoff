@@ -16,6 +16,8 @@
 #define SECONDARY_VIEW @"secondaryView"
 #define CLOSE_BUTTON @"closeButton"
 
+#define VIEW_BEING_ANIMATED @"viewBeingAnimated"
+
 #define FADE_DURATION 0.5
 #define SLIDE_DURATION 2
 #define FLIP_DURATION 2

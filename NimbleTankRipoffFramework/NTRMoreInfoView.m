@@ -9,7 +9,6 @@
 #import "NTRMoreInfoView.h"
 #import <QuartzCore/QuartzCore.h>
 
-#define VIEW_BEING_ANIMATED @"viewBeingAnimated"
 #define IS_ROUNDED_RECT_VIEW_FLIPPING_OUT @"isRoundedRectViewFlippingOut"
 #define ROUNDED_RECT_VIEW_FLIP_OUT @"roundedRectFlipOut"
 #define ROUNDED_RECT_VIEW_FLIP_IN @"roundedRectFlipIn"
